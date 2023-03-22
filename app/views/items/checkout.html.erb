@@ -1,0 +1,14 @@
+<h1>Passer à la caisse</h1>
+
+<p><%= @item.title %></p>
+<p><%= @item.description %></p>
+<p><%= @item.price %>€</p>
+
+<%= form_tag(charge_item_path(@item), method: :post) do %>
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+          data-description="Achat <%= @item.title %>"
+          data-amount="<%= @item.price * 100 %>"
+          data-currency="eur">
+  </script>
+<% end %>

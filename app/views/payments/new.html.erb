@@ -1,0 +1,11 @@
+<h1>Procéder au paiement</h1>
+
+<p><strong>Titre de l'article :</strong> <%= @item.title %></p>
+<p><strong>Description :</strong> <%= @item.description %></p>
+<p><strong>Prix :</strong> <%= @item.price %>€</p>
+
+<%= form_for :payment, url: payments_path, method: :post do |f| %>
+  <%= f.hidden_field :item_id, value: @item.id %>
+  <!-- Ajoutez ici les champs pour les informations de paiement (carte de crédit, etc.) -->
+  <%= f.submit "Payer", class: "btn btn-primary" %>
+<% end %>
