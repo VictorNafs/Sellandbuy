@@ -3,8 +3,10 @@
 <%= render @item %>
 <p><strong>Prix :</strong> <%= @item.price %>€</p>
 
-<%= link_to "Payer maintenant", checkout_item_path(@item) %>
+<div id=paybutton> <%= link_to "Payer maintenant", checkout_item_path(@item) %> </div>
 <div>
+
+
   <%= link_to "Edit this item", edit_item_path(@item) %> |
   <%= link_to "Back to items", items_path %>
 
