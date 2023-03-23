@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 has_many :transactions
 has_many :items
-has_many :items, through: :transactions
+
 
 
 end
