@@ -1,6 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
+
+<% if @item.photo.present? %>
 <%= image_tag @item.photo, width: 200 %>
+<% end %>
 
 <%= render @item %>
 <p><strong>Prix :</strong> <%= @item.price %>€</p>

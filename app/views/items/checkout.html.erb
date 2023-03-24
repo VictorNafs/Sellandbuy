@@ -8,6 +8,33 @@
 <p><%= @item.price %>€</p>
 
 
+<script>
+    const form = document.querySelector('form');
+    const streetInput = document.querySelector('#transaction_street');
+    const zipCodeInput = document.querySelector('#transaction_zip_code');
+    const cityInput = document.querySelector('#transaction_city');
+    const submitButton = document.querySelector('input[type="submit"]');
+
+    function validateForm() {
+      const streetValue = streetInput.value.trim();
+      const zipCodeValue = zipCodeInput.value.trim();
+      const cityValue = cityInput.value.trim();
+
+      if (streetValue === '' || zipCodeValue === '' || cityValue === '') {
+        submitButton.disabled = true;
+      } else {
+        submitButton.disabled = false;
+      }
+    }
+
+    streetInput.addEventListener('input', validateForm);
+    zipCodeInput.addEventListener('input', validateForm);
+    cityInput.addEventListener('input', validateForm);
+  </script>
+
+
+<% end %>
+
 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
         data-description="Achat <%= @item.title %>"

@@ -8,6 +8,8 @@ class Item < ApplicationRecord
   validate :validation_length
   has_one_attached :photo
 
+
+
   private
   
   def validation_length 
