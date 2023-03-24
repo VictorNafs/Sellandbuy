@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :home, only: [:index]
+
+  scope 'admin', module: 'admin', as: 'admin' do
+    resources :dashboard
+  end
+
   resources :payments, only: [:new, :create]
 
  
