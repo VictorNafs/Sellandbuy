@@ -1,13 +1,17 @@
 <h1>Passer à la caisse</h1>
+
+<%= link_to "Retour", :back, class: "btn btn-secondary" %>
+
 <p><%= @item.title %></p>
 <%= image_tag @item.photo, width: 100 if @item.photo.attached? %>
 <p><%= @item.description %></p>
 <p><%= @item.price %>€</p>
-<%= form_tag(charge_item_path(@item), method: :post) do %>
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
-          data-description="Achat <%= @item.title %>"
-          data-amount="<%= @item.price * 100 %>"
-          data-currency="eur">
-  </script>
-<% end %>
+
+
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+        data-description="Achat <%= @item.title %>"
+        data-amount="<%= @item.price * 100 %>"
+        data-currency="eur">
+</script>
+
