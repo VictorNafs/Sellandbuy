@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
+ 
   resources :items do
     get 'checkout', on: :member
     post 'charge', on: :member
