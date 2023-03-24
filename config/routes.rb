@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :home, only: [:index]
   resources :payments, only: [:new, :create]
 
+ 
   resources :items do
     get 'checkout', on: :member
     post 'charge', on: :member
