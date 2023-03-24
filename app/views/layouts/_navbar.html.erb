@@ -47,6 +47,12 @@
   <li>
          Bienvenue  <%= current_user.email %>
      </li> 
+
+     <li>
+<%= form_with(url: user_path(current_user), method: :delete, local: true) do |form| %>
+  <%= form.submit "Supprimer mon compte", data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
+<% end %>
+     </li>
     
   <li>
          <%= link_to "Edit email / password", edit_user_registration_path %>
