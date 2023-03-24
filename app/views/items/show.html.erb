@@ -24,7 +24,7 @@
     </div>
 
     <%= form.hidden_field :item_id, value: @item.id %>
- <%= form.submit "Passer au paiement", disabled: true, onclick: "location.href='#{checkout_item_path(@item)}'" %>
+    <%= form.submit "Passer au paiement", onclick: "location.href='#{checkout_item_path(@item)}'" %>
   <% end %>
 
   <script>
@@ -46,19 +46,15 @@
       }
     }
 
+    window.addEventListener('load', validateForm);
     streetInput.addEventListener('input', validateForm);
     zipCodeInput.addEventListener('input', validateForm);
     cityInput.addEventListener('input', validateForm);
   </script>
 
-
 <% end %>
 
+<%= link_to "Edit this item", edit_item_path(@item) %> |
+<%= link_to "Back to items", items_path %>
 
-
-
-  <%= link_to "Edit this item", edit_item_path(@item) %> |
-  <%= link_to "Back to items", items_path %>
-
-  <%= button_to "Destroy this item", @item, method: :delete %>
-</div>
+<%= button_to "Destroy this item", @item, method: :delete %>
