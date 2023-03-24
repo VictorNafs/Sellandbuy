@@ -40,6 +40,11 @@
 
 
   <ul>
+  <% if user_signed_in? && current_user.admin? %>
+  <li>
+    <%= link_to "Dashboard", admin_dashboard_index_path %>
+  </li>
+  <% end %>
   <% if user_signed_in? %>
      <li>
          <%= button_to "Sign out", destroy_user_session_path, method: :delete %>

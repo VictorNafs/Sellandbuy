@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :items
   devise_for :users
   resources :home, only: [:index]
+  scope 'admin', module: 'admin', as: 'admin' do
+    resources :dashboard
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :payments, only: [:new, :create]
   # Defines the root path route ("/")
