@@ -7,12 +7,16 @@ ruby "3.0.0"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails
-er [https://github.com/puma/puma]
+gem "sprockets-rails"
 gem "puma", "~> 5.0"
 
+gem "pg", "~> 1.1"
+
+gem 'devise'
+
+gem 'table_print'
+
 gem 'stripe'
-gem 'dotenv-rails'
 
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
