@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :transactions, only: [:create]
   end
 
-  resources :users, only: [:destroy]
+  resources :users, only: [:show]
 
   root "home#index"
 end
