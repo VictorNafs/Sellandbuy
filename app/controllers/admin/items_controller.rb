@@ -1,5 +1,5 @@
-module Admin
-class ItemsController < ApplicationController
+
+class Admin::ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
 
  
@@ -50,4 +50,3 @@ end
 
     end
   end
-end
