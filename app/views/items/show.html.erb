@@ -1,7 +1,11 @@
+
 <p style="color: green"><%= notice %></p>
 <%= link_to 'Retour', :back, class: 'btn btn-secondary' %>
 <br>
 <br>
+
+<%= image_tag @item.photo, width: 200 %>
+
 <%= render @item %>
 <p><strong>Prix :</strong> <%= @item.price %>€</p> 
 <p><strong>Description :</strong> <%= @item.description %></p>
@@ -25,41 +29,49 @@
     </div>
 
     <%= form.hidden_field :item_id, value: @item.id %>
- <%= form.submit "Passer au paiement", disabled: true, onclick: "location.href='#{checkout_item_path(@item)}'" %>
+<%= form.submit "Passer au paiement", id: "submit-button", disabled: true %>
   <% end %>
 
-  <script>
-    const form = document.querySelector('form');
-    const streetInput = document.querySelector('#transaction_street');
-    const zipCodeInput = document.querySelector('#transaction_zip_code');
-    const cityInput = document.querySelector('#transaction_city');
-    const submitButton = document.querySelector('input[type="submit"]');
+    <script>
+  const form = document.querySelector('form');
+  const streetInput = document.querySelector('#transaction_street');
+  const zipCodeInput = document.querySelector('#transaction_zip_code');
+  const cityInput = document.querySelector('#transaction_city');
+  const submitButton = document.querySelector('#submit-button');
 
-    function validateForm() {
-      const streetValue = streetInput.value.trim();
-      const zipCodeValue = zipCodeInput.value.trim();
-      const cityValue = cityInput.value.trim();
+  function validateForm() {
+    const streetValue = streetInput.value.trim();
+    const zipCodeValue = zipCodeInput.value.trim();
+    const cityValue = cityInput.value.trim();
 
-      if (streetValue === '' || zipCodeValue === '' || cityValue === '') {
-        submitButton.disabled = true;
-      } else {
-        submitButton.disabled = false;
-      }
+    if (streetValue === '' || zipCodeValue === '' || cityValue === '') {
+      submitButton.disabled = true;
+    } else {
+      submitButton.disabled = false;
     }
+  }
 
-    streetInput.addEventListener('input', validateForm);
-    zipCodeInput.addEventListener('input', validateForm);
-    cityInput.addEventListener('input', validateForm);
-  </script>
+  function handleSubmit(event) {
+  event.preventDefault();
+  if (!submitButton.disabled) {
+    form.submit();
+  }
+}
 
+
+  window.addEventListener('load', validateForm);
+  streetInput.addEventListener('input', validateForm);
+  zipCodeInput.addEventListener('input', validateForm);
+  cityInput.addEventListener('input', validateForm);
+  form.addEventListener('submit', handleSubmit);
+</script>
 
 <% end %>
 
+<%= link_to "Edit this item", edit_item_path(@item) %> |
+<%= link_to "Back to items", items_path %>
 
 
-
-  <%= link_to "Edit this item", edit_item_path(@item) %> |
-  <%= link_to "Back to items", items_path %>
 
   <%= button_to "Destroy this item", @item, method: :delete %>
 </div>

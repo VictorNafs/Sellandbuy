@@ -1,17 +1,27 @@
 class TransactionsController < ApplicationController
+  before_action :set_item, only: [:new, :create]
+
+  def new
+    @transaction = Transaction.new
+  end
+
   def create
     @transaction = Transaction.new(transaction_params)
-    @transaction.item_id = params[:item_id]
-    @transaction.user_id = current_user.id
+    @transaction.user = current_user
+    @transaction.item = @item
 
     if @transaction.save
-      redirect_to root_path, notice: "L'article a été ajouté au panier."
+      redirect_to checkout_item_path(@transaction.item), notice: 'Transaction was successfully created.'
     else
-      redirect_to root_path, alert: "Une erreur est survenue lors de l'ajout de l'article au panier."
+      render :new
     end
   end
 
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
   def transaction_params
     params.require(:transaction).permit(:item_id, :user_id, :street, :zip_code, :city)

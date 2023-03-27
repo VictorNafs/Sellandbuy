@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[show edit update destroy checkout charge]
 
+  before_action :set_item, only: %i[show edit update destroy]
+  before_action :verif_buyer, only: %i[edit update destroy]
+ 
   def checkout
     @transaction = Transaction.new
   end
@@ -34,6 +36,7 @@ class ItemsController < ApplicationController
   end
 
   def index
+
     @items = Item.with_attached_photo.order(created_at: :desc)
     @categories = Category.order(name: :asc)
     
@@ -60,7 +63,12 @@ class ItemsController < ApplicationController
     end
     
     @items = @items.order(created_at: :desc)
+
+    @items = Item.all
+    flash.now[:notice] = "Actuellement : #{@items.count} produits proposés!"   
+
   end
+    
 
   def show
     @transaction = Transaction.new
@@ -111,6 +119,7 @@ class ItemsController < ApplicationController
   private
 
 
+
   def set_item
     @item = Item.find(params[:id])
   end
@@ -119,9 +128,13 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:title, :description, :price, :photo, :category_id)
   end
+    # Seul le vendeur peut edit update destroy l'item
+    def verif_buyer
+        @item = Item.find(params[:id])
+        unless (current_user == @item.user)  || current_user.admin?
+          redirect_to item_path(@item), alert: "Vous n'avez pas les droits pour modifier cet article !"
+        end
+    end
 
-  # Only allow a list of trusted parameters through.
-  def transaction_params
-    params.require(:transaction).permit(:street, :zip_code, :city)
-  end
 end
+
