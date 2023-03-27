@@ -24,6 +24,8 @@ module GitFlow
     
     config.before_configuration do
       Dotenv.load('.env')
+
+      config.active_record.async_query_executor = :global_thread_pool
     end
   end
 end

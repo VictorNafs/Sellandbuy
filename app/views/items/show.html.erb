@@ -1,8 +1,14 @@
 
+<p style="color: green"><%= notice %></p>
+<%= link_to 'Retour', :back, class: 'btn btn-secondary' %>
+<br>
+<br>
+
 <%= image_tag @item.photo, width: 200 %>
 
 <%= render @item %>
-<p><strong>Prix :</strong> <%= @item.price %>€</p>
+<p><strong>Prix :</strong> <%= @item.price %>€</p> 
+<p><strong>Description :</strong> <%= @item.description %></p>
 
 <% if current_user %>
   <% @transaction = current_user.transactions.new %>

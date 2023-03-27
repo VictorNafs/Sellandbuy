@@ -1,17 +1,30 @@
 
-
 <h1>Items</h1>
+
+<%= link_to "New item", new_item_path %>
+<%= link_to 'Categories', categories_path %>
+<%= link_to 'All', items_path %>
+
+
+<% @categories.each do |category| %>
+  <div>
+    <%= link_to category.name, items_path(category_id: category.id) %>
+  </div>
+<% end %>
+
+<%= form_with(url: items_path, method: :get) do |form| %>
+  <%= form.text_field :query_text, placeholder: 'Chercher par mot', onChange: 'this.form.requestSubmit()', value: params[:query_text] %>
+  <%= form.number_field :min_price, placeholder: 'Min Price', onChange: 'this.form.requestSubmit()', value: params[:min_price] %>
+  <%= form.number_field :max_price, placeholder: 'Max Price', onChange: 'this.form.requestSubmit()', value: params[:max_price] %>
+
+<% end %>
 
 
 <div id="items">
   <% @items.each do |item| %>
-    <%= image_tag item.photo, width: 100 if item.photo.attached? %>
     <%= render item %>
-    <p>
-      <%= link_to "Show this item", item %>
-    </p>
+    <p><%= link_to 'Show this item', item %></p>
     <p></p>
   <% end %>
 </div>
 
-<%= link_to "New item", new_item_path %>
