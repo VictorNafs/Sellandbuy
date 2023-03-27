@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
-
+  before_action :verif_buyer, only: %i[edit update destroy]
+ 
   def checkout
     @transaction = Transaction.new
     @item = Item.find(params[:id])
@@ -40,7 +41,9 @@ class ItemsController < ApplicationController
   # GET /items or /items.json
   def index
     @items = Item.all
+    flash.now[:notice] = "Actuellement : #{@items.count} produits proposés!"   
   end
+    
 
   # GET /items/1 or /items/1.json
   def show
@@ -103,13 +106,19 @@ class ItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def item_params
-
       params.require(:item).permit(:title, :description, :price, :photo)
-
     end
 
     # Only allow a list of trusted parameters through.
     def transaction_params
       params.require(:transaction).permit(:street, :zip_code, :city)
     end
+    # Seul le vendeur peut edit update destroy l'item
+    def verif_buyer
+        @item = Item.find(params[:id])
+        unless (current_user == @item.user)  || current_user.admin?
+          redirect_to item_path(@item), alert: "Vous n'avez pas les droits pour modifier cet article !"
+        end
+    end
+
 end
