@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   scope 'admin', module: 'admin', as: 'admin' do
     resources :dashboard, only: [:index]
+    resources :users, only: [:index, :show, :edit, :update]
     resources :items, only: [:index, :show, :edit, :update]
   end
 
