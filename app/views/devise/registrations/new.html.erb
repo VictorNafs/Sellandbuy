@@ -21,21 +21,6 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 <br>
-<p> Les informations suivantes sont optionnelles en inscription mais obligatoires pour les achats</p>
-  <div class="field">
-  <%= f.label :Ville %><br />
-  <%= f.text_field :city,  autocomplete: "city" %>
-</div>
-
-<div class="field">
-<%= f.label :'Code postal' %><br />
-<%= f.text_field :zipcode,  autocomplete: "zipcode" %>
-</div>
-
-<div class="field">
-<%= f.label :'N° et Voie' %><br />
-<%= f.text_field :street,  autocomplete: "street" %>
-</div>
 
 <br>
   <div class="actions">

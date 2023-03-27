@@ -1,10 +1,60 @@
 <p style="color: green"><%= notice %></p>
 
+<%= image_tag @item.photo, width: 200 %>
+
 <%= render @item %>
 <p><strong>Prix :</strong> <%= @item.price %>€</p>
 
-<div id=paybutton> <%= link_to "Payer maintenant", checkout_item_path(@item) %> </div>
-<div>
+<% if current_user %>
+  <% @transaction = current_user.transactions.new %>
+  <%= form_with model: @transaction, url: item_transactions_path(@item), local: true do |form| %>
+    <div class="field">
+      <%= form.label :street %>
+      <%= form.text_field :street %>
+    </div>
+
+    <div class="field">
+      <%= form.label :zip_code %>
+      <%= form.text_field :zip_code %>
+    </div>
+
+    <div class="field">
+      <%= form.label :city %>
+      <%= form.text_field :city %>
+    </div>
+
+    <%= form.hidden_field :item_id, value: @item.id %>
+ <%= form.submit "Passer au paiement", disabled: true, onclick: "location.href='#{checkout_item_path(@item)}'" %>
+  <% end %>
+
+  <script>
+    const form = document.querySelector('form');
+    const streetInput = document.querySelector('#transaction_street');
+    const zipCodeInput = document.querySelector('#transaction_zip_code');
+    const cityInput = document.querySelector('#transaction_city');
+    const submitButton = document.querySelector('input[type="submit"]');
+
+    function validateForm() {
+      const streetValue = streetInput.value.trim();
+      const zipCodeValue = zipCodeInput.value.trim();
+      const cityValue = cityInput.value.trim();
+
+      if (streetValue === '' || zipCodeValue === '' || cityValue === '') {
+        submitButton.disabled = true;
+      } else {
+        submitButton.disabled = false;
+      }
+    }
+
+    streetInput.addEventListener('input', validateForm);
+    zipCodeInput.addEventListener('input', validateForm);
+    cityInput.addEventListener('input', validateForm);
+  </script>
+
+
+<% end %>
+
+
 
 
   <%= link_to "Edit this item", edit_item_path(@item) %> |
@@ -12,4 +62,3 @@
 
   <%= button_to "Destroy this item", @item, method: :delete %>
 </div>
-
