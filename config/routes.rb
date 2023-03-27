@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resources :home, only: [:index]
 
   scope 'admin', module: 'admin', as: 'admin' do
-    resources :dashboard
+    resources :dashboard, only: [:index]
+    resources :items, only: [:index, :show, :edit, :update]
   end
 
   resources :payments, only: [:new, :create]
