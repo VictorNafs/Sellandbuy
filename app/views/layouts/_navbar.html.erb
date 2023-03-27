@@ -44,17 +44,22 @@
   <li>
     <%= link_to "Dashboard", admin_dashboard_index_path %>
   </li>
-  <% end %>
+  <% end%>
+  <% if user_signed_in? && !current_user.admin? %>
+  <%= link_to "Profil", edit_user_registration_path %>
+  <% end%>
+
   <% if user_signed_in? %>
      <li>
          <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+         
      </li>
   <li>
          Bienvenue  <%= current_user.email %>
      </li> 
 
      <li>
-<%= form_with(url: user_path(current_user), method: :delete, local: true) do |form| %>
+<%= form_with(url: cancel_user_registration_path(@user), method: :delete, local: true) do |form| %>
   <%= form.submit "Supprimer mon compte", data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ?" } %>
 <% end %>
      </li>
