@@ -7,13 +7,15 @@ ruby "3.0.0"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails
-er [https://github.com/puma/puma]
+gem "sprockets-rails"
 gem "puma", "~> 5.0"
-
 gem 'stripe'
-gem 'dotenv-rails'
 
+gem "pg", "~> 1.1"
+
+gem 'devise'
+
+gem 'table_print'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -42,6 +44,8 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+#Postgresql FullTextSearch
+gem "pg_search", "~> 2.3"
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -72,3 +76,4 @@ group :test do
 end
 
 gem 'dotenv-rails'
+gem "pg_search", "~> 2.3"
