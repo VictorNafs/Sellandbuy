@@ -1,12 +1,13 @@
-module Admin
-class UsersController < ApplicationController
-  before_action :set_user, only: [:index, :show, :edit, :update, :destroy]
+
+class Admin::UsersController < ApplicationController
+  before_action :set_user, only: [:index, :show, :edit, :update]
 
   def index
+   
   end
 
   def show
-    User.find(params[:id])
+  
   end
 
   def edit
@@ -14,6 +15,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    
     if @user.update(user_params)
       redirect_to admin_user_path(@user), notice: 'Utilisateur mis à jour avec succès.'
     else
@@ -22,8 +24,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user = User.find(params[:id])
+  if @user != current_user # Vérifie si l'utilisateur à supprimer n'est pas l'utilisateur actuel
     @user.destroy
-    redirect_to admin_users_path, notice: 'Utilisateur supprimé avec succès.'
+    redirect_to admin_users_path, notice: 'User was successfully destroyed.'
+  else
+    redirect_to admin_users_path, alert: 'You cannot delete yourself.'
+  end
   end
 
   private
@@ -35,5 +42,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password)
   end
-end
 end
