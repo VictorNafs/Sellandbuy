@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :home, only: [:index]
   scope 'admin', module: 'admin', as: 'admin' do
-    resources :dashboard
+    resources :dashboard, only: [:index]
+    resources :items, only: [:index, :show, :edit, :update]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :payments, only: [:new, :create]
