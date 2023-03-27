@@ -1,0 +1,8 @@
+<h1>Utilisateur</h1>
+
+
+
+<p><strong>Email :</strong> <%= @user.email %></p>
+
+<%= link_to 'Editer', edit_admin_user_path(@user), class: 'btn btn-primary' %>
+<%= button_to 'Supprimer', admin_user_path(@user), method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ?' }, class: 'btn btn-danger' %>

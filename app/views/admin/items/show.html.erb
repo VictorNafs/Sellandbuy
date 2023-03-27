@@ -1,0 +1,7 @@
+<h1>Article</h1>
+
+<p><strong>Titre :</strong> <%= @item.title %></p>
+<p><strong>Contenu :</strong> <%= @item.description %></p>
+
+<!-- <%= link_to 'Editer', edit_admin_item_path(@item), class: 'btn btn-primary' %> -->
+<%= button_to 'Supprimer', @item, method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir supprimer cet article ?' }, class: 'btn btn-danger' %>

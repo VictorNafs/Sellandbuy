@@ -10,7 +10,9 @@ get, 'billing', to 'billing#show'
   resources :home, only: [:index]
 
   scope 'admin', module: 'admin', as: 'admin' do
-    resources :dashboard
+    resources :dashboard, only: [:index]
+    resources :users, only: [:index, :show, :edit, :update]
+    resources :items, only: [:index, :show, :edit, :update]
   end
 
   resources :payments, only: [:new, :create]
@@ -21,7 +23,7 @@ get, 'billing', to 'billing#show'
     resources :transactions, only: [:create]
   end
 
-  resources :users, only: [:destroy]
+  resources :users, only: [:show]
 
   root "home#index"
 

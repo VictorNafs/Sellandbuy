@@ -1,0 +1,32 @@
+<h1>Editer l'article</h1>
+
+<%= form_with(model: [:admin, @item] ) do |form| %>
+ 
+
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :price %>
+  <%= form.text_field :price %>
+  </div>
+  
+  <div>
+  <%= form.label :photo %>
+  <%= form.file_field :photo %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Mettre à jour', class: 'btn btn-primary' %>
+  </div>
+
+<% end %>
+
+<%= link_to 'Annuler', admin_item_path(@item), class: 'btn btn-secondary' %>
