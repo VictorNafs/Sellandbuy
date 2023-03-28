@@ -118,6 +118,10 @@ class ItemsController < ApplicationController
 
  
       private
+
+      def item_params
+        params.require(:item).permit(:title, :description, :price, :category_id, :photo)
+      end
       
       def set_categories
     @categories = Category.all.order(:name)
