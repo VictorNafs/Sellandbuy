@@ -10,6 +10,6 @@ class Transaction < ApplicationRecord
 
          
   def order_email
-    UserMailer.confirmation_email(@transaction).deliver_now
+    UserMailer.checkout_email(self).deliver_now
   end
 end

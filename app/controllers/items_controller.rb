@@ -115,6 +115,7 @@ class ItemsController < ApplicationController
     flash[:error] = e.message
     redirect_to checkout_item_path(@item)
   end
+  
 
  
       private
