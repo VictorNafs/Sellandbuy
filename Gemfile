@@ -76,3 +76,4 @@ group :test do
 end
 
 gem 'dotenv-rails'
+gem "letter_opener", "~> 1.8", :group => :development

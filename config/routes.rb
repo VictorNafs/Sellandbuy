@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-get 'checkout', to: 'checkout#show"
-get, 'checkout/success', to 'checkout#succes' 
-get, 'checkout/success', to 'checkout#succes' 
-get, 'billing', to 'billing#show' 
 
   devise_for :users
 
