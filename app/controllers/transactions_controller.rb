@@ -5,6 +5,34 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new
   end
 
+  def stripe_checkout
+    payload = request.body.read
+    sig_header = request.env['HTTP_STRIPE_SIGNATURE']
+    event = nil
+
+    begin
+      event = Stripe::Webhook.construct_event(
+        payload, sig_header, ENV['STRIPE_WEBHOOK_SECRET']
+      )
+    rescue JSON::ParserError => e
+      # Invalid payload
+      render json: { error: e.message }, status: :bad_request
+      return
+    rescue Stripe::SignatureVerificationError => e
+      # Invalid signature
+      render json: { error: e.message }, status: :bad_request
+      return
+    end
+
+    case event.type
+    when 'charge.succeeded'
+      transaction = Transaction.find_by(item_id: event.data.object.metadata.item_id, user_id: event.data.object.metadata.user_id)
+      transaction.update(paid: true)
+    end
+
+    render json: { message: 'success' }
+  end
+
   def create
     @transaction = Transaction.new(transaction_params)
     @transaction.user = current_user
@@ -13,7 +41,7 @@ class TransactionsController < ApplicationController
     if @transaction.save
       redirect_to checkout_item_path(@transaction.item), notice: 'Transaction was successfully created.'
     else
-puts "Veuillez renseigner une adresse"
+      puts "Veuillez renseigner une adresse"
     end
   end
 

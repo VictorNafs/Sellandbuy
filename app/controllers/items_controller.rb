@@ -1,43 +1,8 @@
 class ItemsController < ApplicationController
-
   before_action :set_item, only: %i[show edit update destroy]
   before_action :verif_buyer, only: %i[edit update destroy]
- 
-  def checkout
-    @transaction = Transaction.new
-  end
-
-  def charge
-    customer = Stripe::Customer.create(
-      email: current_user.email,
-      source: params[:stripeToken]
-    )
-  
-    charge = Stripe::Charge.create(
-      customer: customer.id,
-      amount: @item.price * 100,
-      description: "Achat #{@item.title}",
-      currency: 'eur'
-    )
-  
-    transaction = @item.transactions.build(transaction_params)
-    transaction.user = current_user
-  
-    if transaction.save
-      flash[:notice] = "Paiement effectué avec succès"
-      redirect_to items_path
-    else
-      flash[:error] = "Erreur lors de la sauvegarde de la transaction"
-      redirect_to checkout_item_path(@item)
-    end
-  
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to checkout_item_path(@item)
-  end
 
   def index
-
     @items = Item.with_attached_photo.order(created_at: :desc)
     @categories = Category.order(name: :asc)
     
@@ -67,9 +32,7 @@ class ItemsController < ApplicationController
 
     @items = Item.all
     flash.now[:notice] = "Actuellement : #{@items.count} produits proposés!"   
-
   end
-    
 
   def show
     @transaction = Transaction.new
@@ -117,25 +80,46 @@ class ItemsController < ApplicationController
     end
   end
 
-  private
+  def checkout
+    @transaction = Transaction.new
+    @item = Item.find(params[:id])
+  end
+  
 
+  def create
+    @item = Item.find(params[:item_id])
+    @transaction = @item.transactions.build(transaction_params)
+    @transaction.user = current_user
+
+    if @transaction.save
+      # Mark item as sold
+      @item.update(sold: true)
+  
+      # Send email to seller
+      UserMailer.with(user: @item.user, item: @item).sold_email.deliver_later
+  
+      flash[:notice] = "Paiement effectué avec succès"
+      redirect_to checkout_items_path
+    else
+      flash[:error] = "Erreur lors de la sauvegarde de la transaction"
+      redirect_to checkout_item_path(@item)
+    end
+
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+    redirect_to checkout_item_path(@item)
+  rescue Stripe::InvalidRequestError, Stripe::AuthenticationError, Stripe::APIConnectionError, Stripe::StripeError => e
+    flash[:error] = "Erreur lors du paiement"
+    redirect_to checkout_item_path(@item)
+  end
+
+  private
 
   def set_item
     @item = Item.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
-  def item_params
-    params.require(:item).permit(:title, :description, :price, :photo, :category_id)
+  def transaction_params
+    params.require(:transaction).permit(:item_id, :user_id, :street, :zip_code, :city)
   end
-    # Seul le vendeur peut edit update destroy l'item
-    def verif_buyer
-        @item = Item.find(params[:id])
-        unless (current_user == @item.user)  || current_user.admin?
-          redirect_to item_path(@item), alert: "Vous n'avez pas les droits pour modifier cet article !"
-        end
-    end
-
 end
-
-
