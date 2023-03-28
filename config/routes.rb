@@ -1,21 +1,26 @@
 Rails.application.routes.draw do
+
+  resources :categories, except: :show
+
   devise_for :users
 
   resources :home, only: [:index]
 
   scope 'admin', module: 'admin', as: 'admin' do
-    resources :dashboard
+    resources :dashboard, only: [:index]
+    resources :users, only: [:index, :show, :edit, :update]
+    resources :items, only: [:index, :show, :edit, :update]
   end
 
   resources :payments, only: [:new, :create]
 
-  resources :items do
+ 
+  resources :items, path: '/' do
     get 'checkout', on: :member
     post 'charge', on: :member
+  
     resources :transactions, only: [:create]
   end
 
-  resources :users, only: [:destroy]
-
-  root "home#index"
 end
+

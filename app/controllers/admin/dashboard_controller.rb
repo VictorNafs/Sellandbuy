@@ -1,11 +1,9 @@
-module Admin
 
-    class DashboardController < ApplicationController
+class Admin::DashboardController < ApplicationController
 
         def index
-            @users = User.all
+            @users = User.where.not(id: current_user.id).where.not(admin: true)
+            @items = Item.all
         end
-        
-    end
-    
-end
+
+end     

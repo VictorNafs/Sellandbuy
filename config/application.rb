@@ -11,7 +11,9 @@ module GitFlow
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-
+# config/application.rb
+# config de  Pay associé à Stripe
+  config.action_mailer.default_url_options = { host: "http://localhost:3000" }
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -22,6 +24,8 @@ module GitFlow
     
     config.before_configuration do
       Dotenv.load('.env')
+
+      config.active_record.async_query_executor = :global_thread_pool
     end
   end
 end

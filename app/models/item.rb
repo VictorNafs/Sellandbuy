@@ -1,5 +1,11 @@
 class Item < ApplicationRecord
-
+include PgSearch::Model
+pg_search_scope :search_full_text, against: {
+  title: 'A',
+  description: 'B'
+}
+  
+  belongs_to :category
   belongs_to :user
   has_one :Transaction
   has_many :users, through: :Transactions

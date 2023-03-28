@@ -21,6 +21,14 @@
 
   <%= render 'layouts/navbar' %> 
 
+<%= DateTime.now %>
+
+  <%# Affichage  messages flash  %>
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+  <% end %>
 
 
     <%= yield %>
