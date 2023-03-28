@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
 
-<<<<<<< HEAD
-=======
   resources :categories, except: :show
->>>>>>> cb032a85e75604c24f9c5ed60b45e1942bfdeb7f
 
   devise_for :users
 

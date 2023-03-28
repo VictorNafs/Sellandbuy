@@ -83,8 +83,5 @@ group :test do
 end
 
 gem 'dotenv-rails'
-<<<<<<< HEAD
 gem "letter_opener", "~> 1.8", :group => :development
-=======
 gem "pg_search", "~> 2.3"
->>>>>>> cb032a85e75604c24f9c5ed60b45e1942bfdeb7f
