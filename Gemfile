@@ -22,6 +22,8 @@ gem "pg", "~> 1.1"
 
 gem 'devise'
 
+gem 'sinatra'
+
 gem 'table_print'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
