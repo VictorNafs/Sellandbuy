@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Confirmation de votre achat</h1>
+    <p>Bonjour <%= @transaction.user.email %>,</p>
+    <p>Nous vous confirmons que vous avez bien acheté l'article suivant :</p>
+    <h2><%= @transaction.item.title %></h2>
+    <p><%= @transaction.item.description %></p>
+    <p>Prix : <%= @transaction.item.price %>€</p>
+    <p>Adresse de livraison :</p>
+    <ul>
+      <li><%= @transaction.street %></li>
+      <li><%= @transaction.zip_code %> <%= @transaction.city %></li>
+    </ul>
+    <p>Merci de votre achat !</p>
+  </body>
+</html>

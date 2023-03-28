@@ -1,5 +1,7 @@
 class TransactionsController < ApplicationController
   before_action :set_item, only: [:new, :create]
+  require 'user_mailer'
+
 
   def new
     @transaction = Transaction.new
@@ -37,11 +39,12 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
     @transaction.user = current_user
     @transaction.item = @item
-
+  
     if @transaction.save
+      UserMailer.checkout_email(@transaction).deliver_now # envoi de l'email de confirmation
       redirect_to checkout_item_path(@transaction.item), notice: 'Transaction was successfully created.'
     else
-      puts "Veuillez renseigner une adresse"
+      redirect_to root_path
     end
   end
 
