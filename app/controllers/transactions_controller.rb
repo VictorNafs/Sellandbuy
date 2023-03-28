@@ -13,7 +13,7 @@ class TransactionsController < ApplicationController
     if @transaction.save
       redirect_to checkout_item_path(@transaction.item), notice: 'Transaction was successfully created.'
     else
-      render :new
+puts "Veuillez renseigner une adresse"
     end
   end
 

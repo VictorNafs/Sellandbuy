@@ -8,6 +8,8 @@ class ItemsController < ApplicationController
   end
 
   def charge
+
+
     customer = Stripe::Customer.create(
       email: current_user.email,
       source: params[:stripeToken]
@@ -32,7 +34,15 @@ class ItemsController < ApplicationController
     end
   rescue Stripe::CardError => e
     flash[:error] = e.message
+
     redirect_to checkout_item_path(@item)
+  else
+    flash[:error] = "Erreur lors de la sauvegarde de la transaction"
+    redirect_to show_item_path(@item)
+  end
+rescue Stripe::CardError => e
+  flash[:error] = e.message
+  redirect_to show_item_path(@item)
   end
 
   def index
@@ -119,7 +129,6 @@ class ItemsController < ApplicationController
   private
 
 
-
   def set_item
     @item = Item.find(params[:id])
   end
@@ -137,4 +146,5 @@ class ItemsController < ApplicationController
     end
 
 end
+
 
