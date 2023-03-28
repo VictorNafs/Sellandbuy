@@ -2,6 +2,8 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
   before_action :verif_buyer, only: %i[edit update destroy]
   before_action :set_categories, only: %i[index new edit]
+  before_action :require_login, only: [:new]
+  
 
   def index
     @items = Item.with_attached_photo.order(created_at: :desc)
@@ -129,4 +131,10 @@ class ItemsController < ApplicationController
         params.require(:transaction).permit(:item_id, :user_id, :street, :zip_code, :city)
       end
 
+      def require_login
+        unless user_signed_in?
+          flash[:alert] = "Vous devez être connecté pour créer un nouvel objet."
+          redirect_to new_user_session_path
+        end
+      end
     end
