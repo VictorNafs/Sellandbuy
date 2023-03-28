@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
 
   before_action :set_item, only: %i[show edit update destroy]
   before_action :verif_buyer, only: %i[edit update destroy]
+  before_action :set_categories, 
  
   def checkout
     @transaction = Transaction.new
@@ -76,22 +77,27 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
+    @categories = Category.all
   end
 
   def edit
   end
 
   def create
-    @item = current_user.items.build(item_params)
-
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
+    if current_user
+      @item = current_user.items.build(item_params)
+  
+      respond_to do |format|
+        if @item.save
+          format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
+          format.json { render :show, status: :created, location: @item }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @item.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_user_session_path, alert: "Vous devez être connecté pour créer un article."
     end
   end
 
@@ -118,6 +124,9 @@ class ItemsController < ApplicationController
 
   private
 
+  def set_categories
+@categories = Category.all.order(:name)
+  end
 
   def set_item
     @item = Item.find(params[:id])

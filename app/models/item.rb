@@ -1,19 +1,19 @@
 class Item < ApplicationRecord
-include PgSearch::Model
-pg_search_scope :search_full_text, against: {
-  title: 'A',
-  description: 'B'
-}
-  
-  belongs_to :category
-  belongs_to :user
-  has_one :Transaction
-  has_many :users, through: :Transactions
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :title, presence: true
-  validate :validation_length
-  has_one_attached :photo
-
+  include PgSearch::Model
+  pg_search_scope :search_full_text, against: {
+    title: 'A',
+    description: 'B'
+  }
+    
+    belongs_to :user
+    has_one :Transaction
+    has_many :users, through: :Transactions
+    validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+    validates :title, presence: true
+    validate :validation_length
+    has_one_attached :photo
+validates :category_id, presence: true
+belongs_to :category
   private
   
   def validation_length 
