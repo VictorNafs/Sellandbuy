@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
   resources :categories
 
+=======
+>>>>>>> main
   resources :categories, except: :show
-
   devise_for :users
-
   resources :home, only: [:index]
 
   scope 'admin', module: 'admin', as: 'admin' do
@@ -15,13 +16,13 @@ Rails.application.routes.draw do
 
   resources :payments, only: [:new, :create]
 
- 
   resources :items, path: '/' do
     get 'checkout', on: :member
     post 'charge', on: :member
-  
-    resources :transactions, only: [:create]
+
+    resources :transactions, only: [:create] do
+      post 'checkout', on: :collection
+      post 'stripe_checkout', on: :collection
+    end
   end
-
 end
-

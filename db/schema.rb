@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2023_03_28_114417) do
+=======
+ActiveRecord::Schema[7.0].define(version: 2023_03_28_095324) do
+
+>>>>>>> main
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_114417) do
     t.string "street"
     t.string "zip_code"
     t.string "city"
+    t.boolean "paid"
     t.index ["item_id"], name: "index_transactions_on_item_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end

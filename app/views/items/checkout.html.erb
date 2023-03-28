@@ -7,11 +7,15 @@
 <p><%= @item.description %></p>
 <p><%= @item.price %>€</p>
 
+<%= form_tag stripe_checkout_item_transactions_path(@item), id: 'stripe_checkout_form' do %>
+  <%= hidden_field_tag :item_id, @item.id %>
+  <%= hidden_field_tag :user_id, current_user.id %>
 
-<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
-        data-description="Achat <%= @item.title %>"
-        data-amount="<%= @item.price * 100 %>"
-        data-currency="eur">
-</script>
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+          data-description="Achat <%= @item.title %>"
+          data-amount="<%= @item.price * 100 %>"
+          data-currency="eur">
+  </script>
+<% end %>
 
