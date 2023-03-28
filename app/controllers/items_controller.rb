@@ -9,32 +9,39 @@ class ItemsController < ApplicationController
   def charge
     @item = Item.find(params[:id])
 
-    customer = Stripe::Customer.create(
-      email: current_user.email,
-      source: params[:stripeToken]
-    )
+  # Vérifier si les champs sont remplis
+  if transaction_params.values.any?(&:blank?)
+    flash[:error] = "Veuillez remplir tous les champs"
+    redirect_to show_item_path(@item)
+    return
+  end
 
-    charge = Stripe::Charge.create(
-      customer: customer.id,
-      amount: @item.price * 100,
-      description: "Achat #{@item.title}",
-      currency: 'eur'
-    )
+  customer = Stripe::Customer.create(
+    email: current_user.email,
+    source: params[:stripeToken]
+  )
 
-    transaction = Transaction.new(transaction_params)
-    transaction.item = @item
-    transaction.user = current_user
+  charge = Stripe::Charge.create(
+    customer: customer.id,
+    amount: @item.price * 100,
+    description: "Achat #{@item.title}",
+    currency: 'eur'
+  )
 
-    if transaction.save
-      flash[:notice] = "Paiement effectué avec succès"
-      redirect_to items_path
-    else
-      flash[:error] = "Erreur lors de la sauvegarde de la transaction"
-      redirect_to checkout_item_path(@item)
-    end
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
+  transaction = Transaction.new(transaction_params)
+  transaction.item = @item
+  transaction.user = current_user
+
+  if transaction.save
+    flash[:notice] = "Paiement effectué avec succès"
     redirect_to checkout_item_path(@item)
+  else
+    flash[:error] = "Erreur lors de la sauvegarde de la transaction"
+    redirect_to show_item_path(@item)
+  end
+rescue Stripe::CardError => e
+  flash[:error] = e.message
+  redirect_to show_item_path(@item)
   end
 
   # GET /items or /items.json
@@ -96,20 +103,32 @@ class ItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find(params[:id])
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def item_params
+    params.require(:item).permit(:title, :description, :price, :photo)
+  end
+
+  # Only allow a list of trusted parameters through.
+  def transaction_params
+    params.require(:transaction).permit(:street, :zip_code, :city)
+  end
+
+  def validate_form
+    @street_value = params.dig(:transaction, :street).to_s.strip
+    @zip_code_value = params.dig(:transaction, :zip_code).to_s.strip
+    @city_value = params.dig(:transaction, :city).to_s.strip
+
+    if @street_value.empty? || @zip_code_value.empty? || @city_value.empty?
+      @error_message = "Veuillez remplir tous les champs"
+      @disable_submit = true
+    else
+      @error_message = nil
+      @disable_submit = false
     end
-
-    # Only allow a list of trusted parameters through.
-    def item_params
-
-      params.require(:item).permit(:title, :description, :price, :photo)
-
-    end
-
-    # Only allow a list of trusted parameters through.
-    def transaction_params
-      params.require(:transaction).permit(:street, :zip_code, :city)
-    end
+  end
 end
