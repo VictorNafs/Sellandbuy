@@ -8,23 +8,21 @@ class ItemsController < ApplicationController
   end
 
   def charge
-
-
     customer = Stripe::Customer.create(
       email: current_user.email,
       source: params[:stripeToken]
     )
-
+  
     charge = Stripe::Charge.create(
       customer: customer.id,
       amount: @item.price * 100,
       description: "Achat #{@item.title}",
       currency: 'eur'
     )
-
+  
     transaction = @item.transactions.build(transaction_params)
     transaction.user = current_user
-
+  
     if transaction.save
       flash[:notice] = "Paiement effectué avec succès"
       redirect_to items_path
@@ -32,17 +30,10 @@ class ItemsController < ApplicationController
       flash[:error] = "Erreur lors de la sauvegarde de la transaction"
       redirect_to checkout_item_path(@item)
     end
+  
   rescue Stripe::CardError => e
     flash[:error] = e.message
-
     redirect_to checkout_item_path(@item)
-  else
-    flash[:error] = "Erreur lors de la sauvegarde de la transaction"
-    redirect_to show_item_path(@item)
-  end
-rescue Stripe::CardError => e
-  flash[:error] = e.message
-  redirect_to show_item_path(@item)
   end
 
   def index
