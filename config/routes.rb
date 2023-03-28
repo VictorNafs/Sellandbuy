@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
+  resources :categories
+
+=======
+>>>>>>> main
   resources :categories, except: :show
   devise_for :users
   resources :home, only: [:index]

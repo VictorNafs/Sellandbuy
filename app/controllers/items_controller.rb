@@ -1,6 +1,43 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
   before_action :verif_buyer, only: %i[edit update destroy]
+<<<<<<< HEAD
+  before_action :set_categories, 
+ 
+  def checkout
+    @transaction = Transaction.new
+  end
+
+  def charge
+    customer = Stripe::Customer.create(
+      email: current_user.email,
+      source: params[:stripeToken]
+    )
+  
+    charge = Stripe::Charge.create(
+      customer: customer.id,
+      amount: @item.price * 100,
+      description: "Achat #{@item.title}",
+      currency: 'eur'
+    )
+  
+    transaction = @item.transactions.build(transaction_params)
+    transaction.user = current_user
+  
+    if transaction.save
+      flash[:notice] = "Paiement effectué avec succès"
+      redirect_to items_path
+    else
+      flash[:error] = "Erreur lors de la sauvegarde de la transaction"
+      redirect_to checkout_item_path(@item)
+    end
+  
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+    redirect_to checkout_item_path(@item)
+  end
+=======
+>>>>>>> main
 
   def index
     @items = Item.with_attached_photo.order(created_at: :desc)
@@ -39,22 +76,27 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
+    @categories = Category.all
   end
 
   def edit
   end
 
   def create
-    @item = current_user.items.build(item_params)
-
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
+    if current_user
+      @item = current_user.items.build(item_params)
+  
+      respond_to do |format|
+        if @item.save
+          format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
+          format.json { render :show, status: :created, location: @item }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @item.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_user_session_path, alert: "Vous devez être connecté pour créer un article."
     end
   end
 
@@ -112,7 +154,13 @@ class ItemsController < ApplicationController
     redirect_to checkout_item_path(@item)
   end
 
+<<<<<<< HEAD
+  def set_categories
+@categories = Category.all.order(:name)
+  end
+=======
   private
+>>>>>>> main
 
   def set_item
     @item = Item.find(params[:id])

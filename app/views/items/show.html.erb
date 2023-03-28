@@ -4,7 +4,7 @@
 <br>
 <br>
 
-<%= image_tag @item.photo, width: 200 %>
+
 
 <%= render @item %>
 <p><strong>Prix :</strong> <%= @item.price %>€</p> 
@@ -29,12 +29,7 @@
     </div>
 
     <%= form.hidden_field :item_id, value: @item.id %>
-<<<<<<< HEAD
-<%= form.submit "Passer au paiement", id: "submit-button", disabled: false %>
-  <% end %>
 
-    
-=======
     <%= form.submit "Passer au paiement", id: "submit-button" %>
   <% end %>
 
@@ -79,7 +74,6 @@
     form.addEventListener('submit', handleSubmit);
   </script>
 
->>>>>>> cb032a85e75604c24f9c5ed60b45e1942bfdeb7f
 <% end %>
 
 <%= link_to "Edit this item", edit_item_path(@item) %> |
