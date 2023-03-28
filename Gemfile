@@ -18,6 +18,11 @@ gem 'table_print'
 
 gem 'stripe'
 
+gem "pg", "~> 1.1"
+
+gem 'devise'
+
+gem 'table_print'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -46,6 +51,8 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+#Postgresql FullTextSearch
+gem "pg_search", "~> 2.3"
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -76,4 +83,8 @@ group :test do
 end
 
 gem 'dotenv-rails'
+<<<<<<< HEAD
 gem "letter_opener", "~> 1.8", :group => :development
+=======
+gem "pg_search", "~> 2.3"
+>>>>>>> cb032a85e75604c24f9c5ed60b45e1942bfdeb7f

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+<<<<<<< HEAD
+=======
+  resources :categories, except: :show
+>>>>>>> cb032a85e75604c24f9c5ed60b45e1942bfdeb7f
 
   devise_for :users
 
@@ -13,15 +17,13 @@ Rails.application.routes.draw do
 
   resources :payments, only: [:new, :create]
 
-  resources :items do
+ 
+  resources :items, path: '/' do
     get 'checkout', on: :member
     post 'charge', on: :member
+  
     resources :transactions, only: [:create]
   end
 
-  resources :users, only: [:show]
-
-  root "home#index"
-
-
 end
+
