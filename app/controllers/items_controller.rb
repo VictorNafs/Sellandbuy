@@ -4,8 +4,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.with_attached_photo.order(created_at: :desc)
-    @categories = Category.order(name: :asc)
-    
+
     if params[:category_id].present?
       @items = @items.where(category_id: params[:category_id])
     end

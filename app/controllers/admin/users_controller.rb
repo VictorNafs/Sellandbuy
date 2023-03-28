@@ -24,7 +24,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
   if @user != current_user # Vérifie si l'utilisateur à supprimer n'est pas l'utilisateur actuel
     @user.destroy
     redirect_to admin_users_path, notice: 'User was successfully destroyed.'

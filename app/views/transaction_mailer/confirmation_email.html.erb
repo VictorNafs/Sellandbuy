@@ -1,0 +1,15 @@
+<p>Bonjour <%= @transaction.user.email %>!</p>
+
+<p>Nous avons bien reçu votre commande numéro <%= @Transaction.id %>.</p>
+
+<p>Voici le récapitulatif de votre commande :</p>
+
+<ul>
+  <% @transaction.items.each do |item| %>
+    <li><%= item.product.title %></li>
+  <% end %>
+</ul>
+
+
+
+<p>Merci de votre confiance !</p>
