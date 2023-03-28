@@ -10,7 +10,7 @@
 <p><strong>Prix :</strong> <%= @item.price %>€</p> 
 <p><strong>Description :</strong> <%= @item.description %></p>
 
-<% if current_user %>
+<% if user_signed_in? %>
   <% @transaction = current_user.transactions.new %>
   <%= form_with model: @transaction, url: item_transactions_path(@item), local: true do |form| %>
     <div class="field">
@@ -29,6 +29,12 @@
     </div>
 
     <%= form.hidden_field :item_id, value: @item.id %>
+<<<<<<< HEAD
+<%= form.submit "Passer au paiement", id: "submit-button", disabled: false %>
+  <% end %>
+
+    
+=======
     <%= form.submit "Passer au paiement", id: "submit-button" %>
   <% end %>
 
@@ -73,6 +79,7 @@
     form.addEventListener('submit', handleSubmit);
   </script>
 
+>>>>>>> cb032a85e75604c24f9c5ed60b45e1942bfdeb7f
 <% end %>
 
 <%= link_to "Edit this item", edit_item_path(@item) %> |
