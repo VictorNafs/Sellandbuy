@@ -1,7 +1,9 @@
 <%= form_with(model: item) do |form| %>
+ 
+ 
   <% if item.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+    <div class="alert alert-danger" >
+      <h2><%= pluralize(item.errors.count, "erreurs") %>: ce produit ne peut être enregistré.</h2>
 
       <ul>
         <% item.errors.each do |error| %>

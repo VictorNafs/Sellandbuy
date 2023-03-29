@@ -4,33 +4,43 @@
 <br>
 <br>
 
-<%= image_tag @item.photo, width: 200 %>
+
+<% if @item.photo.present? %>
+  <%= image_tag @item.photo, width: 200 %>
+<% end %>
+
 
 <%= render @item %>
 <p><strong>Prix :</strong> <%= @item.price %>€</p> 
 <p><strong>Description :</strong> <%= @item.description %></p>
-
+<br>
+<p>Merci de renseigner les champs suivants pour procéder au paiement: </p>
 <% if current_user %>
   <% @transaction = current_user.transactions.new %>
   <%= form_with model: @transaction, url: item_transactions_path(@item), local: true do |form| %>
     <div class="field">
       <%= form.label :street %>
-      <%= form.text_field :street %>
+     
+      <%= form.text_field :street, placeholder: "   Info. requise" %>
+  
+
+
     </div>
 
     <div class="field">
       <%= form.label :zip_code %>
-      <%= form.text_field :zip_code %>
+      <%= form.text_field :zip_code, placeholder: "   Info. requise" %>
     </div>
 
     <div class="field">
       <%= form.label :city %>
-      <%= form.text_field :city %>
+      <%= form.text_field :city, placeholder: "   Info. requise" %>
     </div>
-
+    <br>
     <%= form.hidden_field :item_id, value: @item.id %>
 <%= form.submit "Passer au paiement", id: "submit-button", disabled: true %>
   <% end %>
+  <br>
 
     <script>
   const form = document.querySelector('form');

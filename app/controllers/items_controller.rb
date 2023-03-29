@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
  
   def checkout
     @transaction = Transaction.new
+    @items = Item.all
   end
 
   def charge

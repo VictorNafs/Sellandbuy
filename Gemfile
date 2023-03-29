@@ -18,9 +18,6 @@ gem 'table_print'
 
 gem 'stripe'
 
-gem "pg", "~> 1.1"
-
-gem 'devise'
 
 gem 'table_print'
 
@@ -83,4 +80,4 @@ group :test do
 end
 
 gem 'dotenv-rails'
-gem "pg_search", "~> 2.3"
+
