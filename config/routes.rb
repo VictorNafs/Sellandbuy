@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
-
-  resources :categories, only: [:show]
-
-
-  resources :categories, except: :show
+  resources :categories
   devise_for :users
   resources :home, only: [:index]
 
