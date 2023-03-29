@@ -20,6 +20,8 @@ gem "pg", "~> 1.1"
 
 gem 'devise'
 
+gem 'will_paginate', '~> 3.1.1'
+
 gem 'sinatra'
 
 gem 'table_print'
