@@ -5,53 +5,88 @@
         </button>
 
         <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-          <a class="navbar-brand col-lg-3 me-0" href="#">Centered nav</a>
-          <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+        <a class="navbar-brand col-lg-1 me-0 d-flex align-items-center justify-content-center" href="/">
+        <%= image_tag asset_path('sellandbuy_Logo.png'), alt: 'Sell&Buy Logo', class: 'mx-auto img-fluid navbar-logo' %>
+      </a>
+          <ul class="navbar-nav col-lg-6 justify-content-lg-center ms-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="/">Accueil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="#">À propos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link" href="#">Contact</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu">
+              <% if @categories.present? %>
+                <% @categories.each do |category| %>
+                  <li><%= link_to category.name, category_path(category), class: "dropdown-item" %></li>
+                <% end %>
+              <% else %>
+                <li><em>No categories found</em></li>
+              <% end %>
+            </ul>
+          </li>
           </ul>
+
           <div class="d-lg-flex col-lg-3 justify-content-lg-end">
-            <button class="btn btn-primary">Button</button>
+          <div class="dropdown">
+            <% if user_signed_in? %>
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Profil
+              </button>
+            <% else %>
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Sign in / Sign Up
+              </button>
+            <% end %>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+              <% if user_signed_in? && current_user.admin? %>
+                <li>
+                  <%= link_to "Dashboard", admin_dashboard_index_path, class: "dropdown-item" %>
+                </li>
+              <% end%>
+              <% if user_signed_in? && !current_user.admin? %>
+                <li>
+                  <%= link_to "Profil", edit_user_registration_path, class: "dropdown-item" %>
+                </li>
+              <% end%>
+              <% if user_signed_in? %>
+                <li>
+                  <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                </li>
+              <% else %>
+                <li>
+                  <%= link_to "Sign in", new_user_session_path, class: "dropdown-item" %>
+                </li>
+                <li>
+                  <%= link_to "Sign up", new_user_registration_path, class: "dropdown-item" %>
+                </li>
+              <% end %>
+            </ul>
           </div>
+        </div>
+
+        </div>
+          
         </div>
       </div>
     </nav>
     
-  <ul>
-    <% if user_signed_in? && current_user.admin? %>
-      <li>
-        <%= link_to "Dashboard", admin_dashboard_index_path %>
-      </li>
-    <% end%>
-    <% if user_signed_in? && !current_user.admin? %>
-      <%= link_to "Profil", edit_user_registration_path %>
-    <% end%>
-    <% if user_signed_in? %>
-      <li>
-        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "Sign in", new_user_session_path %>
-      </li>
-      <li>
-        <%= link_to "Sign up", new_user_registration_path %>
-      </li>
-    <% end %>
-  </ul>
 </nav>
+
+<style>
+.navbar-brand:hover img {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.navbar-logo {
+  height: auto; /* pour conserver la hauteur originale de l'image */
+  max-width: 100%; /* pour que l'image s'adapte à la largeur de son conteneur parent */
+  width: 70px; /* ajustez la largeur selon vos besoins */
+}
+</style>
