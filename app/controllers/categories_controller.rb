@@ -8,6 +8,11 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    @category = Category.find(params[:id])
+    if @category.items.empty?
+      flash[:notice] = "Il n'y a pas encore d'objet dans cette catégorie."
+      redirect_to items_path
+    end
   end
 
   # GET /categories/new
