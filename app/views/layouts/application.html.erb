@@ -16,7 +16,14 @@
 
   <%= render 'layouts/navbar' %> 
 
-<%= DateTime.now %>
+  <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <p class="text-center"><%= DateTime.now %></p>
+    </div>
+  </div>
+</div>
+
 
   <%# Affichage  messages flash  %>
   <% flash.each do |type, msg| %>
