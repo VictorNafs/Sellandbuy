@@ -10,8 +10,6 @@ gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 gem "sprockets-rails"
 gem "puma", "~> 5.0"
 
-gem "pg", "~> 1.1"
-
 gem 'devise'
 
 gem 'table_print'
@@ -87,3 +85,7 @@ end
 gem 'dotenv-rails'
 gem "letter_opener", "~> 1.8", :group => :development
 gem "pg_search", "~> 2.3"
+
+gem "cssbundling-rails", "~> 1.1"
+
+gem "jsbundling-rails", "~> 1.1"
