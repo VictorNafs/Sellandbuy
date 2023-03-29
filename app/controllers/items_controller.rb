@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   before_action :verif_buyer, only: %i[edit update destroy]
   before_action :set_categories, only: %i[index new edit]
   before_action :require_login, only: [:new]
+  before_action :verif_buyer, only: %i[edit update destroy]
   
 
   def index
@@ -35,6 +36,14 @@ class ItemsController < ApplicationController
     @items = Item.all
     flash.now[:notice] = "Actuellement : #{Item.count} produits proposés!"
   end
+    
+    def verif_buyer
+      unless current_user && @item.user == current_user
+        flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
+        redirect_to root_path
+      end
+    end
+  
 
   def show
     @transaction = Transaction.new
