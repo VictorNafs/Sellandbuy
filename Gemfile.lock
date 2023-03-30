@@ -205,14 +205,6 @@ GEM
     rspec-mocks (3.12.4)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-rails (6.0.1)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      railties (>= 6.1)
-      rspec-core (~> 3.11)
-      rspec-expectations (~> 3.11)
-      rspec-mocks (~> 3.11)
-      rspec-support (~> 3.11)
     rspec-support (3.12.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -283,7 +275,6 @@ DEPENDENCIES
   pg_search (~> 2.3)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
-  rspec-rails
   selenium-webdriver
   sinatra
   sprockets-rails

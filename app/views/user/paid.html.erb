@@ -1,0 +1,6 @@
+<ul>
+    <% @transactions.each do |transaction| %>
+      <% item = Item.find(transaction.item_id) %>
+      <li><%= item.title %></li>
+    <% end %>
+  </ul>
