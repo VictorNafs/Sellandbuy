@@ -3,4 +3,7 @@ class HomeController < ApplicationController
         @items = Item.all 
      @categories = Category.all 
     end
+
+    def contact
+    end
 end
