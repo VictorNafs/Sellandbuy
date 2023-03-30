@@ -2,8 +2,9 @@
   <div class="row">
     <div class="col-md-6 text-center mx-auto">
       <%= render @item %>
-      <p class="lead"><strong>Prix :</strong> <%= @item.price %>€</p> 
-      <p class="lead"><strong>Description :</strong> <%= @item.description %></p>
+      <p class="lead" style="color:black;"><strong>Prix :</strong> <%= @item.price %>€</p>
+      <p class="lead" style="color:black;"><strong>Description :</strong> <%= @item.description %></p>
+      
       <%= link_to "Modifier cet article", edit_item_path(@item), class: 'btn btn-outline-secondary' %> 
       <%= button_to "Supprimer cet article", @item, method: :delete, data: { confirm: 'Êtes-vous sûr ?' }, class: 'btn btn-outline-danger' %>
       <%= link_to "Retour aux articles", items_path, class: 'btn btn-outline-primary' %>

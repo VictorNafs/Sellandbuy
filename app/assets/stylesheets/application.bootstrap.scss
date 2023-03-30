@@ -28,11 +28,11 @@ background-position: center;
 
 
 
-  .navbar {
-    background-color: white;
-    border: none;
-    box-shadow: 0 0 10px rgb(255, 255, 255);
-  }
+.navbar {
+  background-color: white;
+  border: none;
+  box-shadow: 0 5px 20px rgb(0, 0, 0);
+}
 
 .row {
     display: flex;
@@ -54,7 +54,7 @@ background-position: center;
   }
   
   .col-md-6 img {
-    width: 50%; /* Agrandir l'image pour remplir son conteneur */
+    width: 100%; /* Agrandir l'image pour remplir son conteneur */
     height: auto; /* Empêcher l'image de se déformer */
     transition: transform 0.5s ease-in-out; /* Ajouter une transition pour l'effet de zoom au survol */
   }
@@ -80,6 +80,7 @@ background-position: center;
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
     transition: all 0.2s ease-in-out;
+    width: 150px; /* ajout de la propriété width */
   }
   
   .btn-outline-secondary {
@@ -161,6 +162,6 @@ background-position: center;
     background-color: #fff;
     color: #000;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px -5px 20px rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
   }
