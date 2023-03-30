@@ -5,7 +5,9 @@ ruby "3.0.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
-
+group :development, :test do
+  gem 'rspec-rails'
+end
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 gem "puma", "~> 5.0"
@@ -19,6 +21,8 @@ gem 'stripe'
 gem "pg", "~> 1.1"
 
 gem 'devise'
+
+gem 'will_paginate', '~> 3.1.1'
 
 gem 'sinatra'
 
@@ -89,3 +93,4 @@ gem "pg_search", "~> 2.3"
 gem "cssbundling-rails", "~> 1.1"
 
 gem "jsbundling-rails", "~> 1.1"
+gem 'rspec'

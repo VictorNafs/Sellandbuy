@@ -2,8 +2,8 @@
   <%= image_tag(item.photo, width: 100) if item.photo.attached? %>
   <h3><%= item.title %></h3>
   <p>
-<strong>Category:</strong>
-<%= link_to item.category.name, item.category  %>
+    <strong>Category:</strong>
+    <%= link_to item.category.name, item.category, class: 'category-link' %>
   </p>
   <p><%= number_to_currency(item.price) %></p>
 <% end %>

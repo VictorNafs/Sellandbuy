@@ -5,8 +5,7 @@ class HomeController < ApplicationController
     end
     
     
-    def apropos
-      
+    def apropos 
     end
 
 

@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
 
-  resources :categories, except: :show
+  get '/apropos', to: 'home#apropos'
+
+  resources :user, only: [:dold, :order, :paid]
+  get '/orders', to: 'user#order'
+  get 'orders/paid', to: 'user#paid'
+  get 'orders/sold', to: 'user#sold'
+
+  resources :categories
   devise_for :users
-  resources :home, only: [:index]
+  resources :home, only: [:index, :contact]
+  get '/contact', to: 'home#contact'
 
   scope 'admin', module: 'admin', as: 'admin' do
     resources :dashboard, only: [:index]
@@ -22,7 +30,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/apropos', to: 'home#apropos'
+ 
 
  
 
