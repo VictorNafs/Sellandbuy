@@ -1,83 +1,77 @@
-
-<p style="color: green"><%= notice %></p>
-<%= link_to 'Retour', :back, class: 'btn btn-secondary' %>
-<br>
-<br>
-
-
-
-<%= render @item %>
-<p><strong>Prix :</strong> <%= @item.price %>€</p> 
-<p><strong>Description :</strong> <%= @item.description %></p>
-
-<% if user_signed_in? %>
-  <% @transaction = current_user.transactions.new %>
-  <%= form_with model: @transaction, url: item_transactions_path(@item), local: true do |form| %>
-    <div class="field">
-      <%= form.label :street %>
-      <%= form.text_field :street %>
+<div class="container text-center mx-auto">
+  <div class="row">
+    <div class="col-md-6 text-center mx-auto">
+      <%= render @item %>
+      <p class="lead"><strong>Prix :</strong> <%= @item.price %>€</p> 
+      <p class="lead"><strong>Description :</strong> <%= @item.description %></p>
+      <%= link_to "Modifier cet article", edit_item_path(@item), class: 'btn btn-outline-secondary' %> 
+      <%= button_to "Supprimer cet article", @item, method: :delete, data: { confirm: 'Êtes-vous sûr ?' }, class: 'btn btn-outline-danger' %>
+      <%= link_to "Retour aux articles", items_path, class: 'btn btn-outline-primary' %>
     </div>
+    <% if user_signed_in? %>
+      <div class="col-md-6">
+        <%= form_with model: @transaction, url: item_transactions_path(@item), local: true do |form| %>
+          <div class="form-group">
+            <%= form.label :street, "Rue" %>
+            <%= form.text_field :street, class: 'form-control', placeholder: 'Entrez votre adresse' %>
+          </div>
 
-    <div class="field">
-      <%= form.label :zip_code %>
-      <%= form.text_field :zip_code %>
-    </div>
+          <div class="form-group">
+            <%= form.label :zip_code, "Code postal" %>
+            <%= form.text_field :zip_code, class: 'form-control', placeholder: 'Entrez votre code postal' %>
+          </div>
 
-    <div class="field">
-      <%= form.label :city %>
-      <%= form.text_field :city %>
-    </div>
+          <div class="form-group">
+            <%= form.label :city, "Ville" %>
+            <%= form.text_field :city, class: 'form-control', placeholder: 'Entrez votre ville' %>
+          </div>
 
-    <%= form.hidden_field :item_id, value: @item.id %>
+          <%= form.hidden_field :item_id, value: @item.id %>
 
-    <%= form.submit "Passer au paiement", id: "submit-button" %>
-  <% end %>
+          <%= form.submit "Passer au paiement", id: "submit-button", class: 'btn btn-success btn-lg btn-block', disabled: true %>
+        <% end %>
 
-  <script>
-    const form = document.querySelector('form');
-    const streetInput = document.querySelector('#transaction_street');
-    const zipCodeInput = document.querySelector('#transaction_zip_code');
-    const cityInput = document.querySelector('#transaction_city');
-    const submitButton = document.querySelector('#submit-button');
+        <script>
+          const form = document.querySelector('form');
+          const streetInput = document.querySelector('#transaction_street');
+          const zipCodeInput = document.querySelector('#transaction_zip_code');
+          const cityInput = document.querySelector('#transaction_city');
+          const submitButton = document.querySelector('#submit-button');
 
-    function validateForm() {
-      const streetValue = streetInput.value.trim();
-      const zipCodeValue = zipCodeInput.value.trim();
-      const cityValue = cityInput.value.trim();
+          function validateForm() {
+            const streetValue = streetInput.value.trim();
+            const zipCodeValue = zipCodeInput.value.trim();
+            const cityValue = cityInput.value.trim();
 
-      if (streetValue === '' || zipCodeValue === '' || cityValue === '') {
-        submitButton.disabled = true;
-      } else {
-        submitButton.disabled = false;
-      }
-    }
+            if (streetValue === '' || zipCodeValue === '' || cityValue === '') {
+              submitButton.disabled = true;
+            } else {
+              submitButton.disabled = false;
+            }
+          }
 
-    function handleSubmit(event) {
-      event.preventDefault();
+          function handleSubmit(event) {
+            event.preventDefault();
 
-      if (submitButton.disabled) {
-        const errorMessage = document.createElement('p');
-        errorMessage.textContent = "Veuillez remplir tous les champs avant de passer au paiement.";
-        form.prepend(errorMessage);
-      } else {
-        form.submit();
-      }
-    }
+            if (submitButton.disabled) {
+              const errorMessage = document.createElement('p');
+              errorMessage.textContent = "Veuillez remplir tous les champs avant de passer au paiement.";
+              form.prepend(errorMessage);
+            } else {
+              form.submit();
+            }
+          }
 
-    window.addEventListener('load', validateForm);
-    streetInput.addEventListener('input', validateForm);
-    streetInput.addEventListener('change', validateForm);
-    zipCodeInput.addEventListener('input', validateForm);
-    zipCodeInput.addEventListener('change', validateForm);
-    cityInput.addEventListener('input', validateForm);
-    cityInput.addEventListener('change', validateForm);
-    form.addEventListener('submit', handleSubmit);
-  </script>
-
-<% end %>
-
-<%= link_to "Edit this item", edit_item_path(@item) %> |
-<%= link_to "Back to items", items_path %>
-
-  <%= button_to "Destroy this item", @item, method: :delete %>
-
+          window.addEventListener('load', validateForm);
+          streetInput.addEventListener('input', validateForm);
+          streetInput.addEventListener('change', validateForm);
+          zipCodeInput.addEventListener('input', validateForm);
+          zipCodeInput.addEventListener('change', validateForm);
+          cityInput.addEventListener('input', validateForm);
+          cityInput.addEventListener('change', validateForm);
+          form.addEventListener('submit', handleSubmit);
+        </script>
+      </div>
+    <% end %>
+  </div>
+</div>
