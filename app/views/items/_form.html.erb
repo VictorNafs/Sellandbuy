@@ -1,7 +1,7 @@
 <%= form_with(model: item) do |form| %>
   <% if item.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+      <h2><%= pluralize(item.errors.count, "erreur") %> : Vous ne détenez pas les droits pour modifier ce produit</h2>
 
       <ul>
         <% item.errors.each do |error| %>
@@ -11,35 +11,83 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
+  <hr>
+
+
+  <div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col col-lg-2">
+  
+    </div>
+    <div class="col-md-auto">
+
+
+  <div class="input-group-prepend">
+  <span class="input-group-text" id="inputGroup-sizing-sm">Titre de l'annonce</span>
+</div>
+  <div class="w-100 form-group">
+    <%= form.label :" ", style: "display: block" %>
     <%= form.text_field :title %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-  <%= form.label :price %>
-<%= form.text_field :price %>
+  <div class="input-group-prepend">
+  <span class="input-group-text" id="inputGroup-sizing-lg">Description du produit mis en vente</span>
 </div>
+  <%= form.label :" ", style: "display: block" %>
+  <%= form.text_area :description %>
 
 
 
-<div>
-<%= form.label :category, style: "display: block" %>
+
+  <div class="input-group-prepend">
+  <span class="input-group-text" id="inputGroup-sizing-sm">Catégorie</span>
+</div>
+ <div>
+<%= form.label :" ", style: "display: block" %>
 <%= form.select :category_id, options_for_select(@categories.collect {|cat| [cat.name, cat.id]}) %>
 </div>
 
+
+<br>
+<div class="input-group-prepend">
+<span class="input-group-text" id="inputGroup-sizing-sm">Photographie du produit</span>
+</div>
 <div>
-<%= form.label :photo %>
+<%= form.label :" " %>
 <%= form.file_field :photo %>
 </div>
 
 
+<br>
+
+
+  <div class="input-group-prepend">
+  <span class="input-group-text" id="inputGroup-sizing-sm">Prix demandé</span>
+</div>
   <div>
-    <%= form.submit %>
+  <%= form.label :" "%>
+<%= form.text_field :price %>
+</div>
+
+<hr>
+
+ <div class="btn btn-primary">
+    <%= form.submit  'Mise en Vente' %>
   </div>
+
+
+ 
+    </div>
+    <div class="col col-lg-2">
+  
+    </div>
+  </div>  
+</div>
+
+
+
+
 <% end %>
+
+<br><br>
+

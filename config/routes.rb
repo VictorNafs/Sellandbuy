@@ -21,4 +21,9 @@ Rails.application.routes.draw do
       post 'stripe_checkout', on: :collection
     end
   end
+
+  get '/apropos', to: 'home#apropos'
+
+ 
+
 end
