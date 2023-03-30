@@ -1,9 +1,24 @@
-<%= link_to "Categories", categories_path %>
+<div class="jumbotron text-center border border-secondary" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
+  <div class="container">
+    <h1 class="display-4">Sell and Buy : La solution idéale pour vos besoins en ligne de vente et d'achat.</h1>
+    <p class="lead fs-5">Rejoignez Sell and Buy dès aujourd'hui pour profiter d'une expérience d'achat et de vente en ligne sûre et fiable. Trouvez des offres incroyables sur une variété de produits, de vêtements aux produits électroniques. Notre processus de commande simple et notre paiement sécurisé garantissent une expérience sans tracas pour tous vos besoins d'achat et de vente en ligne.</p>
+    <% if user_signed_in? %>
+      <%= link_to "Créer une annonce maintenant", new_item_path, class: "btn btn-primary btn-lg mb-3", role: "button" %>
+    <% else %>
+      <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary btn-lg mb-3", role: "button" %>
+    <% end %>
+  </div>
+</div>
 
-<h1>Items</h1>
-<% if user_signed_in? %>
-<%= link_to "New item", new_item_path %>
-<% end %>
+<div class="container my-4">
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-<%= type %> text-center" role="alert">
+      <%= msg %>
+    </div>
+  <% end %>
+</div>
+
+<h1 class="text-center mb-5 pb-3">Découvrez les offres exceptionnelles de nos annonces actuelles !</h1>
 
 <div id="items" class="row row-cols-3">
   <% @items.each do |item| %>

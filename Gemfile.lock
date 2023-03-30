@@ -197,10 +197,6 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.5)
-    rspec (3.12.0)
-      rspec-core (~> 3.12.0)
-      rspec-expectations (~> 3.12.0)
-      rspec-mocks (~> 3.12.0)
     rspec-core (3.12.1)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.2)
@@ -279,7 +275,6 @@ DEPENDENCIES
   pg_search (~> 2.3)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
-  rspec
   selenium-webdriver
   sinatra
   sprockets-rails
@@ -296,4 +291,4 @@ RUBY VERSION
    ruby 3.0.0p0
 
 BUNDLED WITH
-   2.4.8
+   2.4.6

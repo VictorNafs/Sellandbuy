@@ -17,7 +17,11 @@ class CategoriesController < ApplicationController
 
   # GET /categories/new
   def new
-    @category = Category.new
+    if current_user.admin?
+      @category = Category.new
+    else
+      redirect_to items_path, alert: "Vous n'êtes pas autorisé à effectuer cette action."
+    end
   end
 
   # GET /categories/1/edit
@@ -26,39 +30,39 @@ class CategoriesController < ApplicationController
 
   # POST /categories or /categories.json
   def create
-    @category = Category.new(category_params)
-
-    respond_to do |format|
+    if current_user.admin?
+      @category = Category.new(category_params)
       if @category.save
-        format.html { redirect_to category_url(@category), notice: "Category was successfully created." }
-        format.json { render :show, status: :created, location: @category }
+        redirect_to category_path(@category), notice: "Category was successfully created."
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
       end
+    else
+      redirect_to items_path, alert: "Vous n'êtes pas autorisé à effectuer cette action."
     end
   end
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
-    respond_to do |format|
+    if current_user.admin?
+      @category = Category.find(params[:id])
       if @category.update(category_params)
-        format.html { redirect_to category_url(@category), notice: "Category was successfully updated." }
-        format.json { render :show, status: :ok, location: @category }
+        redirect_to category_path(@category), notice: "Category was successfully updated."
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
       end
+    else
+      redirect_to items_path, alert: "Vous n'êtes pas autorisé à effectuer cette action."
     end
   end
-
   # DELETE /categories/1 or /categories/1.json
   def destroy
-    @category.destroy
-
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: "Category was successfully destroyed." }
-      format.json { head :no_content }
+    if current_user.admin?
+      @category = Category.find(params[:id])
+      @category.destroy
+      redirect_to categories_path, notice: "Category was successfully destroyed."
+    else
+      redirect_to items_path, alert: "Vous n'êtes pas autorisé à effectuer cette action."
     end
   end
 
