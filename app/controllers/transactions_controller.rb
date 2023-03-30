@@ -11,7 +11,7 @@ class TransactionsController < ApplicationController
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     event = nil
-
+  
     begin
       event = Stripe::Webhook.construct_event(
         payload, sig_header, ENV['STRIPE_WEBHOOK_SECRET']
@@ -25,20 +25,26 @@ class TransactionsController < ApplicationController
       render json: { error: e.message }, status: :bad_request
       return
     end
-
+  
     case event.type
     when 'charge.succeeded'
-      transaction = Transaction.find_by(item_id: event.data.object.metadata.item_id, user_id: event.data.object.metadata.user_id)
+      transaction = Transaction.find_by(item_id: event.data.object.metadata.item_id, user: User.find_by(email: event.data.object.receipt_email))
+      puts "Transaction found: #{transaction.inspect}" # Debugging message
       transaction.update(paid: true)
+      puts "Transaction updated: #{transaction.inspect}" # Debugging message
     end
-
-    render json: { message: 'success' }
+  
+    redirect_to items_path, notice: 'Transaction was successfully created.'
   end
+  
+  
+  
 
   def create
     @transaction = Transaction.new(transaction_params)
     @transaction.user = current_user
     @transaction.item = @item
+    @transaction.paid = false
   
     if @transaction.save
       UserMailer.checkout_email(@transaction).deliver_now # envoi de l'email de confirmation
