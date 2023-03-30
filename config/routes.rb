@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   resources :categories, except: :show
   devise_for :users
-  resources :home, only: [:index]
+  resources :home, only: [:index, :contact]
+  get '/contact', to: 'home#contact'
 
   scope 'admin', module: 'admin', as: 'admin' do
     resources :dashboard, only: [:index]
