@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :home, only: [:index, :contact]
   get '/contact', to: 'home#contact'
+  get '/about', to: 'home#about'
 
   scope 'admin', module: 'admin', as: 'admin' do
     resources :dashboard, only: [:index]
