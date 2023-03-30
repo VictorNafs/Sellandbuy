@@ -11,4 +11,6 @@
   <% end %>
 </div>
 
-<%= link_to "New category", new_category_path %>
+<% if current_user.admin? %>
+  <%= link_to "New category", new_category_path %>
+<% end %>

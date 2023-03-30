@@ -1,9 +1,13 @@
-<h1>New item</h1>
-
-<%= render "form", item: @item %>
-
-<br>
-
-<div>
-  <%= link_to "Back to items", items_path %>
+<div class="container my-5">
+  <h1 class="text-center display-4 mb-4">Créer une annonce</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <%= render "form", item: @item, placeholder: { title: "Titre de l'annonce", description: "Description de l'annonce", price: "Prix de l'annonce"} %>
+    </div>
+  </div>
+  <div class="row mt-4 justify-content-center">
+    <div class="col-md-4 col-lg-2">
+      <%= link_to "Retour aux annonces", items_path, class: "btn btn-secondary btn-block" %>
+    </div>
+  </div>
 </div>
