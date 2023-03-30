@@ -56,14 +56,14 @@
               <% end%>
               <% if user_signed_in? %>
                 <li>
-                  <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                  <%= button_to "Deconexion", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
                 </li>
               <% else %>
                 <li>
-                  <%= link_to "Sign in", new_user_session_path, class: "dropdown-item" %>
+                  <%= link_to "Se connecter", new_user_session_path, class: "dropdown-item" %>
                 </li>
                 <li>
-                  <%= link_to "Sign up", new_user_registration_path, class: "dropdown-item" %>
+                  <%= link_to "S'inscrire", new_user_registration_path, class: "dropdown-item" %>
                 </li>
               <% end %>
             </ul>
