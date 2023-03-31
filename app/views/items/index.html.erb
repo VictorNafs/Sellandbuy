@@ -1,4 +1,4 @@
-<div class="jumbotron text-center " style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
+<div class="jumbotron text-center" style="border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
   <div class="container">
     <h1 class="display-">Sell and Buy : La solution idéale pour vos besoins en ligne de vente et d'achat.</h1>
     <p class="lead fs-5">Rejoignez Sell and Buy dès aujourd'hui pour profiter d'une expérience d'achat et de vente en ligne sûre et fiable. Trouvez des offres incroyables sur une variété de produits, de vêtements aux produits électroniques. Notre processus de commande simple et notre paiement sécurisé garantissent une expérience sans tracas pour tous vos besoins d'achat et de vente en ligne.</p>
@@ -20,26 +20,25 @@
 
 <h1 class="text-center mb-5 pb-3">Découvrez les offres exceptionnelles de nos annonces actuelles !</h1>
 
-<div id="items" class="row row-cols-3">
+<div id="items" class="row row-cols-1 row-cols-md-3">
   <% @items.each do |item| %>
 
-    <div class="col col-md-4 mb-4">
-  <div class="card shadow card-small ">
-    <%= link_to item_path(item), class: 'item', 'data-turbo-frame': '_top' do %>
-      <%= image_tag(item.photo, class: "img-fluid") if item.photo.attached? %>
-      <div class="card-body">
-        <h5 class="card-title"><%= item.title %></h5>
-        <p class="card-text">
-          <strong>Catégorie:</strong>
-          <%= link_to item.category.name, item.category, class: 'category-link' %>
-        </p>
-        <p class="card-text"><%= number_to_currency(item.price, unit: "€", format: "%n %u") %></p>
-        <%= link_to 'Voir le produit', item, class: "btn btn-primary" %>
+    <div class="col mb-4">
+      <div class="card shadow card-small ">
+        <%= link_to item_path(item), class: 'item', 'data-turbo-frame': '_top' do %>
+          <%= image_tag(item.photo, class: "img-fluid") if item.photo.attached? %>
+          <div class="card-body">
+            <h5 class="card-title"><%= item.title %></h5>
+            <p class="card-text">
+              <strong>Catégorie:</strong>
+              <%= link_to item.category.name, item.category, class: 'category-link' %>
+            </p>
+            <p class="card-text"><%= number_to_currency(item.price, unit: "€", format: "%n %u") %></p>
+            <%= link_to 'Voir le produit', item, class: "btn btn-primary" %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
-</div>
+    </div>
 
   <% end %>
 </div>
-
