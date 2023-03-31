@@ -9,4 +9,14 @@ class HomeController < ApplicationController
 
     def about
     end
+
+    def send_contact_email
+        name = params[:name]
+        email = params[:email]
+        message = params[:message]
+
+        UserMailer.contact_email(name, email, message).deliver_now
+    
+        redirect_to root_path, notice: "Votre message a été envoyé avec succès"
+    end
 end

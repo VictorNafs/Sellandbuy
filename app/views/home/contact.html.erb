@@ -2,25 +2,24 @@
   <div class="row justify-content-center">
     <form class="text-light text-dark">
       <h2>Contactez-nous</h2>
-      <div class="mb-3">
-        <label for="name" class="form-label">Nom complet</label>
-        <input type="text" class="form-control" id="name" required>
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Adresse e-mail</label>
-        <input type="email" class="form-control" id="email" required>
-      </div>
-      <div class="mb-3">
-        <label for="subject" class="form-label">Sujet</label>
-        <input type="text" class="form-control" id="subject" required>
-      </div>
-      <div class="mb-3">
-        <label for="message" class="form-label">Message</label>
-        <textarea class="form-control" id="message" rows="3" required></textarea>
-      </div>
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Envoyer</button>
-      </div>
+      <%= form_tag send_contact_email_path, method: :post do %>
+  <div class="form-group">
+    <%= label_tag :name, "Nom complet" %>
+    <%= text_field_tag :name, nil, class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :email, "Adresse email" %>
+    <%= email_field_tag :email, nil, class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :message, "Message" %>
+    <%= text_area_tag :message, nil, class: "form-control", rows: 5, required: true %>
+  </div>
+
+  <%= submit_tag "Envoyer", class: "btn btn-primary" %>
+<% end %>
     </form>
   </div>
 </div>

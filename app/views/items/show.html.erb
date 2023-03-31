@@ -4,10 +4,11 @@
       <%= render @item %>
       <p class="lead" style="color:black;"><strong>Prix :</strong> <%= @item.price %>€</p>
       <p class="lead" style="color:black;"><strong>Description :</strong> <%= @item.description %></p>
-      
-      <% if user_signed_in? && current_user.id == @item.user_id || current_user.admin %>
+      <% if user_signed_in? %>
+      <% if current_user.id == @item.user_id || current_user.admin %>
       <%= link_to "Modifier cet article", edit_item_path(@item), class: 'btn btn-outline-secondary' %>
       <%= button_to "Supprimer cet article", @item, { method: :delete, data: { confirm: 'Êtes-vous sûr ?' }, class: 'btn btn-outline-danger' } %>
+      <% end %>
       <% end %>
       
       <%= link_to "Retour aux articles", items_path, class: 'btn btn-outline-primary' %>
