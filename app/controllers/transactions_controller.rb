@@ -17,44 +17,37 @@ class TransactionsController < ApplicationController
         payload, sig_header, ENV['STRIPE_WEBHOOK_SECRET']
       )
     rescue JSON::ParserError => e
-      # Invalid payload
-      render json: { error: e.message }, status: :bad_request
-      return
-    rescue Stripe::SignatureVerificationError => e
-      # Invalid signature
-      render json: { error: e.message }, status: :bad_request
-      return
-    end
-
-    case event.type
-    when 'charge.succeeded'
-      transaction = Transaction.find_by(item_id: event.data.object.metadata.item_id, user_id: event.data.object.metadata.user_id)
-      transaction.update(paid: true)
-    end
-
-    render json: { message: 'success' }
+  # Invalid payload
+  render json: { error: e.message }, status: :bad_request
+  return
+  rescue Stripe::SignatureVerificationError => e
+  # Invalid signature
+  render json: { error: e.message }, status: :bad_request
+  return
   end
-
+  case event.type
+  when 'charge.succeeded'
+  transaction = Transaction.find_by(item_id: event.data.object.metadata.item_id, user_id: event.data.object.metadata.user_id)
+  transaction.update(paid: true)
+  end
+  render json: { message: 'success' }
+  end
   def create
-    @transaction = Transaction.new(transaction_params)
-    @transaction.user = current_user
-    @transaction.item = @item
-  
-    if @transaction.save
-      UserMailer.checkout_email(@transaction).deliver_now # envoi de l'email de confirmation
-      redirect_to checkout_item_path(@transaction.item), notice: 'Transaction was successfully created.'
-    else
-      redirect_to request.referrer || items_path
-    end
+  @transaction = Transaction.new(transaction_params)
+  @transaction.user = current_user
+  @transaction.item = @item
+  if @transaction.save
+  UserMailer.checkout_email(@transaction).deliver_now # envoi de l'email de confirmation
+  redirect_to checkout_item_path(@transaction.item), notice: 'Transaction was successfully created.'
+  else
+  redirect_to request.referrer || items_path
   end
-
+  end
   private
-
   def set_item
-    @item = Item.find(params[:item_id])
+  @item = Item.find(params[:item_id])
   end
-
   def transaction_params
-    params.require(:transaction).permit(:item_id, :user_id, :street, :zip_code, :city)
+  params.require(:transaction).permit(:item_id, :user_id, :street, :zip_code, :city)
   end
-end
+  end

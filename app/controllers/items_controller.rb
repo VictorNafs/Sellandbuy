@@ -15,10 +15,9 @@ class ItemsController < ApplicationController
 
     if params[:min_price].present?
       @items = @items.where("price >= ?", params[:min_price])
-    end
-
-    if params[:max_price].present?
-      @items = @items.where("price <= ?", params[:max_price])
+  end
+  if params[:max_price].present?
+  @items = @items.where("price <= ?", params[:max_price])
     end
 
     if params[:query_text].present?
@@ -125,32 +124,24 @@ class ItemsController < ApplicationController
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to checkout_item_path(@item)
-  end
-  
-
- 
-      private
-
-      def item_params
-        params.require(:item).permit(:title, :description, :price, :category_id, :photo)
-      end
-      
-      def set_categories
+    end
+    private
+    def item_params
+    params.require(:item).permit(:title, :description, :price, :category_id, :photo)
+    end
+    def set_categories
     @categories = Category.all.order(:name)
-      end
-
-      def set_item
-        @item = Item.find(params[:id])
-      end
-    
-      def transaction_params
-        params.require(:transaction).permit(:item_id, :user_id, :street, :zip_code, :city)
-      end
-
-      def require_login
-        unless user_signed_in?
-          flash[:alert] = "Vous devez être connecté pour créer un nouvel objet."
-          redirect_to new_user_session_path
-        end
-      end
+    end
+    def set_item
+    @item = Item.find(params[:id])
+    end
+    def transaction_params
+    params.require(:transaction).permit(:item_id, :user_id, :street, :zip_code, :city)
+    end
+    def require_login
+    unless user_signed_in?
+    flash[:alert] = "Vous devez être connecté pour créer un nouvel objet."
+    redirect_to new_user_session_path
+    end
+    end
     end
