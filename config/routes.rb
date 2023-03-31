@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :categories
   devise_for :users
-  resources :home, only: [:index, :contact]
+  resources :home, only: [:index, :contact, :about]
   get '/contact', to: 'home#contact'
   get '/about', to: 'home#about'
 
