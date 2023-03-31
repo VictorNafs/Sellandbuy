@@ -40,7 +40,8 @@ images = [
       user_id: User.pluck(:id).sample,
       price: Faker::Commerce.price(range: 1..100.0, as_string: true),
       title: Faker::Commerce.product_name,
-      description: Faker::Lorem.sentence(word_count: 10, random_words_to_add: 40)[0..20],
+
+      description: Faker::Lorem.sentence(word_count: 10, random_words_to_add: 40)[0..15],
       category_id: categories.sample.id
     )
     file = URI.open(Faker::LoremFlickr.image(size: "600x600", search_terms: ['product']))
