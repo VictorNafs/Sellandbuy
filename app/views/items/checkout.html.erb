@@ -1,21 +1,28 @@
-<h1>Passer à la caisse</h1>
+<div class="container mt-5 text-center">
+  <%= link_to "Retour", :back, class: "btn btn-secondary mb-3" %>
 
-<%= link_to "Retour", :back, class: "btn btn-secondary" %>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body text-center">
+          <p class="card-title font-weight-bold"><%= @item.title %></p>
+          <%= image_tag @item.photo, class: "mb-3", width: 200 if @item.photo.attached? %>
+          <p class="card-text"><%= @item.description %></p>
+          <p class="card-text font-weight-bold"><%= @item.price %>€</p>
 
-<p><%= @item.title %></p>
-<%= image_tag @item.photo, width: 100 if @item.photo.attached? %>
-<p><%= @item.description %></p>
-<p><%= @item.price %>€</p>
+          <%= form_tag stripe_checkout_item_transactions_path(@item), id: 'stripe_checkout_form' do %>
+            <%= hidden_field_tag :item_id, @item.id %>
+            <%= hidden_field_tag :user_id, current_user.id %>
 
-<%= form_tag stripe_checkout_item_transactions_path(@item), id: 'stripe_checkout_form' do %>
-  <%= hidden_field_tag :item_id, @item.id %>
-  <%= hidden_field_tag :user_id, current_user.id %>
-
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
-          data-description="Achat <%= @item.title %>"
-          data-amount="<%= @item.price * 100 %>"
-          data-currency="eur">
-  </script>
-<% end %>
-
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+                    data-description="Achat <%= @item.title %>"
+                    data-amount="<%= @item.price * 100 %>"
+                    data-currency="eur">
+            </script>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
