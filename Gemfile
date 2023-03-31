@@ -5,9 +5,8 @@ ruby "3.0.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
-group :development, :test do
-  gem 'rspec-rails'
-end
+
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 gem "puma", "~> 5.0"
@@ -20,13 +19,11 @@ gem 'stripe'
 
 gem "pg", "~> 1.1"
 
-gem 'devise'
+
 
 gem 'will_paginate', '~> 3.1.1'
 
 gem 'sinatra'
-
-gem 'table_print'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -66,6 +63,8 @@ gem "pg_search", "~> 2.3"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+
+  gem 'rspec-rails', ">= 3.9.0"
 end
 
 group :development do
@@ -88,9 +87,9 @@ end
 
 gem 'dotenv-rails'
 gem "letter_opener", "~> 1.8", :group => :development
-gem "pg_search", "~> 2.3"
+
 
 gem "cssbundling-rails", "~> 1.1"
 
 gem "jsbundling-rails", "~> 1.1"
-gem 'rspec'
+

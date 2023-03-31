@@ -17,6 +17,10 @@ belongs_to :category
   private
   
   def validation_length 
+
+    self.title ||= ""
+    self.description ||= ""
+    
     if description.length > 50
       errors.add(:description, 'Pas plus de 50 caractères svp')
     end

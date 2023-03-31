@@ -1,13 +1,6 @@
 Rails.application.routes.draw do
 
-  get '/apropos', to: 'home#apropos'
-
-  resources :user, only: [:dold, :order, :paid]
-  get '/orders', to: 'user#order'
-  get 'orders/paid', to: 'user#paid'
-  get 'orders/sold', to: 'user#sold'
-
-  resources :categories
+  resources :categories, except: :show
   devise_for :users
   resources :home, only: [:index, :contact]
   get '/contact', to: 'home#contact'
