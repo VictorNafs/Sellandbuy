@@ -23,22 +23,22 @@
 <div id="items" class="row row-cols-3">
   <% @items.each do |item| %>
 
-    <div class="col col-md-4">
-      <div class="card shadow text-dark">    
-        <h3><%= item.title %></h3>
-        <%= link_to item_path(item), class: 'item', 'data-turbo-frame': '_top' do %>
-          <%= image_tag(item.photo, width: 200) if item.photo.attached? %>
-          <div class="card-body text-center">
-            <p>
-              <strong>Category:</strong>
-              <%= link_to item.category.name, item.category, class: 'category-link' %>
-            </p>
-            <p><%= number_to_currency(item.price, unit: "€", format: "%n %u") %></p>
-            <%= link_to 'Voir le produit', item, class: "btn btn-primary" %>
-          </div>
-        <% end %>
+    <div class="col col-md-4 mb-4">
+  <div class="card shadow card-small ">
+    <%= link_to item_path(item), class: 'item', 'data-turbo-frame': '_top' do %>
+      <%= image_tag(item.photo, class: "img-fluid") if item.photo.attached? %>
+      <div class="card-body">
+        <h5 class="card-title"><%= item.title %></h5>
+        <p class="card-text">
+          <strong>Catégorie:</strong>
+          <%= link_to item.category.name, item.category, class: 'category-link' %>
+        </p>
+        <p class="card-text"><%= number_to_currency(item.price, unit: "€", format: "%n %u") %></p>
+        <%= link_to 'Voir le produit', item, class: "btn btn-primary" %>
       </div>
-    </div>
+    <% end %>
+  </div>
+</div>
 
   <% end %>
 </div>
