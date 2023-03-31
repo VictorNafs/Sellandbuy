@@ -38,7 +38,7 @@ class ItemsController < ApplicationController
   end
     
     def verif_buyer
-      unless current_user && @item.user == current_user
+      unless current_user && @item.user == current_user || current_user.admin
         flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
         redirect_to root_path
       end
@@ -69,6 +69,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
+   
   end
 
   def update

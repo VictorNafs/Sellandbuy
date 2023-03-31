@@ -6,6 +6,11 @@ body {
   color: white;
 }
 
+a {
+  text-decoration: none;
+  color: #007bff; /* ou toute autre couleur de votre choix */
+}
+
 .jumbotron {
   background-color: rgb(233, 236, 239);
   color: black;
