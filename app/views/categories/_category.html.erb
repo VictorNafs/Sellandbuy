@@ -1,13 +1,12 @@
 
 <div id="<%= dom_id category %>">
   <h2>
-    <strong>Category:</strong>
     <%= category.name %>
   </h2>
 
   <% category.items.each do |item| %>
     <p>
-    <%= item.title %> | <%= item.price %> | <%= link_to "View Item", item %>
+    <%= item.title %> | <%= item.price %>€ | <%= link_to "Voir le produit", item %>
     </p>
     <% end %>
 </div>

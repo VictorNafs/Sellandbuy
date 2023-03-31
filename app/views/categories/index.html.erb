@@ -1,16 +1,19 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Categories</h1>
-
-<div id="categories">
-  <% @categories.each do |category| %>
-    <%= render category %>
-    <p>
-      <%= link_to "Show this category", category %>
-    </p>
-  <% end %>
+<div class="container text-center" style="color: black;">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <p class="alert alert-success"><%= notice %></p>
+      <h1>Categories</h1>
+      <div id="categories">
+        <% @categories.each do |category| %>
+          <%= render category %>
+          <p>
+            <%= link_to "Voir cette categorie", category, class: "btn btn-primary" %>
+          </p>
+        <% end %>
+      </div>
+      <% if current_user.admin? %>
+        <%= link_to "New category", new_category_path, class: "btn btn-success mt-3" %>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<% if current_user.admin? %>
-  <%= link_to "New category", new_category_path %>
-<% end %>

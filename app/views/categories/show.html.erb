@@ -1,10 +1,14 @@
-<p style="color: green"><%= notice %></p>
-
+<div class="container text-center">
+  <p class="text-success"><%= notice %></p>
 <%= render @category %>
 
-<div>
-  <%= link_to "Edit this category", edit_category_path(@category) %> |
-  <%= link_to "Back to categories", categories_path %>
+<% if current_user&.admin? %>
+<div class="mt-3">
+<%= link_to "Modifier", edit_category_path(@category), class: "btn btn-primary mr-2" %>
+<%= button_to "Supprimer", @category, method: :delete, data: { confirm: "Êtes-vous sûr de vouloir supprimer cette catégorie ?" }, class: "btn btn-danger" %>
+</div>
+<% end %>
 
-  <%= button_to "Destroy this category", @category, method: :delete %>
+<%= link_to "Retourner aux catégories", categories_path, class: "btn btn-secondary mt-3" %>
+
 </div>
