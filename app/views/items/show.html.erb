@@ -31,49 +31,10 @@
 
           <%= form.hidden_field :item_id, value: @item.id %>
 
-          <%= form.submit "Passer au paiement", id: "submit-button", class: 'btn btn-success btn-lg btn-block', disabled: true %>
+          <%= form.submit "Passer au paiement", id: "submit-button", class: 'btn btn-success btn-lg btn-block' %>
         <% end %>
 
-        <script>
-          const form = document.querySelector('form');
-          const streetInput = document.querySelector('#transaction_street');
-          const zipCodeInput = document.querySelector('#transaction_zip_code');
-          const cityInput = document.querySelector('#transaction_city');
-          const submitButton = document.querySelector('#submit-button');
-
-          function validateForm() {
-            const streetValue = streetInput.value.trim();
-            const zipCodeValue = zipCodeInput.value.trim();
-            const cityValue = cityInput.value.trim();
-
-            if (streetValue === '' || zipCodeValue === '' || cityValue === '') {
-              submitButton.disabled = true;
-            } else {
-              submitButton.disabled = false;
-            }
-          }
-
-          function handleSubmit(event) {
-            event.preventDefault();
-
-            if (submitButton.disabled) {
-              const errorMessage = document.createElement('p');
-              errorMessage.textContent = "Veuillez remplir tous les champs avant de passer au paiement.";
-              form.prepend(errorMessage);
-            } else {
-              form.submit();
-            }
-          }
-
-          window.addEventListener('load', validateForm);
-          streetInput.addEventListener('input', validateForm);
-          streetInput.addEventListener('change', validateForm);
-          zipCodeInput.addEventListener('input', validateForm);
-          zipCodeInput.addEventListener('change', validateForm);
-          cityInput.addEventListener('input', validateForm);
-          cityInput.addEventListener('change', validateForm);
-          form.addEventListener('submit', handleSubmit);
-        </script>
+        
       </div>
     <% end %>
   </div>

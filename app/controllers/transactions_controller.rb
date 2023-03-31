@@ -44,7 +44,7 @@ class TransactionsController < ApplicationController
       UserMailer.checkout_email(@transaction).deliver_now # envoi de l'email de confirmation
       redirect_to checkout_item_path(@transaction.item), notice: 'Transaction was successfully created.'
     else
-      redirect_to root_path
+      redirect_to request.referrer || items_path
     end
   end
 
