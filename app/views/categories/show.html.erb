@@ -1,14 +1,13 @@
 <div class="container text-center">
   <p class="text-success"><%= notice %></p>
-<%= render @category %>
+  <%= render @category %>
 
-<% if current_user&.admin? %>
-<div class="mt-3">
-<%= link_to "Modifier", edit_category_path(@category), class: "btn btn-primary mr-2" %>
-<%= button_to "Supprimer", @category, method: :delete, data: { confirm: "Êtes-vous sûr de vouloir supprimer cette catégorie ?" }, class: "btn btn-danger" %>
-</div>
-<% end %>
+  <% if current_user&.admin? %>
+    <div class="mt-3">
+      <%= link_to "Modifier", edit_category_path(@category), class: "btn btn-primary mr-2" %>
+      <%= button_to "Supprimer", @category, method: :delete, data: { confirm: "Êtes-vous sûr de vouloir supprimer cette catégorie ?" }, class: "btn btn-danger" %>
+    </div>
+  <% end %>
 
-<%= link_to "Retourner aux catégories", categories_path, class: "btn btn-secondary mt-3" %>
-
+  <%= link_to "Retourner aux catégories", categories_path, class: "btn btn-secondary mt-3" %>
 </div>
