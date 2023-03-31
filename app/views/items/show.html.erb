@@ -5,15 +5,14 @@
       <p class="lead" style="color:black;"><strong>Prix :</strong> <%= @item.price %>€</p>
       <p class="lead" style="color:black;"><strong>Description :</strong> <%= @item.description %></p>
       
-      <% if user_signed_in? && current_user.id == @item.user_id %>
-        <%= link_to "Modifier cet article", edit_item_path(@item), class: 'btn btn-outline-secondary' %> 
-        <%= button_to "Supprimer cet article", @item, method: :delete, data: { confirm: 'Êtes-vous sûr ?' }, class: 'btn btn-outline-danger' %>
+      <% if user_signed_in? && current_user.id == @item.user_id || current_user.admin %>
+      <%= link_to "Modifier cet article", edit_item_path(@item), class: 'btn btn-outline-secondary' %>
+      <%= button_to "Supprimer cet article", @item, { method: :delete, data: { confirm: 'Êtes-vous sûr ?' }, class: 'btn btn-outline-danger' } %>
       <% end %>
       
       <%= link_to "Retour aux articles", items_path, class: 'btn btn-outline-primary' %>
-    </div>
-    <% if user_signed_in? %>
-      <div class="col-md-6">
+      
+      <% if user_signed_in? %>
         <%= form_with model: @transaction, url: item_transactions_path(@item), local: true do |form| %>
           <div class="form-group">
             <%= form.label :street, "Rue" %>
@@ -34,9 +33,10 @@
 
           <%= form.submit "Passer au paiement", id: "submit-button", class: 'btn btn-success btn-lg btn-block' %>
         <% end %>
-
-        
-      </div>
-    <% end %>
+      <% else %>
+        <%= link_to_if(!user_signed_in?, "Passer au paiement", new_user_registration_path, class: 'btn btn-success btn-lg btn-block') %>
+      <% end %>
+      
+    </div>
   </div>
 </div>
