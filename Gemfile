@@ -92,3 +92,5 @@ gem "pg_search", "~> 2.3"
 
 
 gem 'rspec'
+gem 'faker'
+gem 'faker'
