@@ -7,9 +7,11 @@ Rails.application.routes.draw do
 
   resources :categories
   devise_for :users
-  resources :home, only: [:index, :contact, :about]
+  resources :home, only: [:index, :contact, :about, :create_mail]
   get '/contact', to: 'home#contact'
   get '/about', to: 'home#about'
+  post 'send_contact_email', to: 'home#send_contact_email', as: 'send_contact_email'
+
 
   scope 'admin', module: 'admin', as: 'admin' do
     resources :dashboard, only: [:index]
